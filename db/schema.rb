@@ -10,10 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161205172636) do
+ActiveRecord::Schema.define(version: 20161206092755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bookings", force: :cascade do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "status"
+    t.integer  "user_id"
+    t.integer  "listing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_bookings_on_listing_id", using: :btree
+    t.index ["user_id"], name: "index_bookings_on_user_id", using: :btree
+  end
+
+  create_table "furnitures", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "category"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_furnitures_on_user_id", using: :btree
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.float    "base_price"
+    t.integer  "furniture_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["furniture_id"], name: "index_listings_on_furniture_id", using: :btree
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -40,4 +70,8 @@ ActiveRecord::Schema.define(version: 20161205172636) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "bookings", "listings"
+  add_foreign_key "bookings", "users"
+  add_foreign_key "furnitures", "users"
+  add_foreign_key "listings", "furnitures"
 end
