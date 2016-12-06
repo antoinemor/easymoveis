@@ -1,5 +1,5 @@
 class Booking < ApplicationRecord
   belongs_to :user
-  has_many :listings
-  has_many :furnitures, through: :listings
+  belongs_to :listing
+  has_one :furniture, through: :listing
 end
