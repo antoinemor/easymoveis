@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161206132314) do
+ActiveRecord::Schema.define(version: 20161205172636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,10 @@ ActiveRecord::Schema.define(version: 20161206132314) do
     t.string   "city"
     t.string   "zip_code"
     t.string   "country"
+    t.integer  "listing_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["listing_id"], name: "index_addresses_on_listing_id", using: :btree
   end
 
   create_table "bookings", force: :cascade do |t|
@@ -40,19 +42,17 @@ ActiveRecord::Schema.define(version: 20161206132314) do
     t.string   "name"
     t.text     "description"
     t.string   "category"
+    t.integer  "listing_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["listing_id"], name: "index_furnitures_on_listing_id", using: :btree
   end
 
   create_table "listings", force: :cascade do |t|
     t.float    "base_price"
-    t.integer  "furniture_id"
     t.integer  "user_id"
-    t.integer  "address_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["address_id"], name: "index_listings_on_address_id", using: :btree
-    t.index ["furniture_id"], name: "index_listings_on_furniture_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_listings_on_user_id", using: :btree
   end
 
@@ -73,16 +73,13 @@ ActiveRecord::Schema.define(version: 20161206132314) do
     t.string   "first_name"
     t.string   "last_name"
     t.date     "date_of_birth"
-    t.integer  "address_id"
-    t.index ["address_id"], name: "index_users_on_address_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "addresses", "listings"
   add_foreign_key "bookings", "listings"
   add_foreign_key "bookings", "users"
-  add_foreign_key "listings", "addresses"
-  add_foreign_key "listings", "furnitures"
+  add_foreign_key "furnitures", "listings"
   add_foreign_key "listings", "users"
-  add_foreign_key "users", "addresses"
 end

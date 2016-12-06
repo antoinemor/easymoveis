@@ -4,6 +4,7 @@ class CreateFurnitures < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :description
       t.string :category
+      t.references :listing, foreign_key: true
 
       t.timestamps
     end
