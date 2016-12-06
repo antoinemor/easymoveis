@@ -1,17 +1,25 @@
 class ListingsController < ApplicationController
-  before_action :find_listing only: [:new, :create, :index, :update, :destroy]
+  before_action :find_listing, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @results = listings.furnitures.where(type: params[:type])
+    # city = params[:city]
+    # furniture_type = params[:furniture_type]
+    # @results = Listings.where(city: city, furniture_type: furniture_type)
+    @results = Listings.all
   end
 
   def new
     @listing = Listing.new
+    @listing.furniture = Furniture.new
   end
 
   def create
     @listing = Listing.new(listing_params)
-    #@listing.furniture = @furniture
+    @listing.user = current_user
+    @furniture = Furniture.new(listing_params[:furniture_attributes])
+    @furniture.user = current_user
+    @listing.furniture = @furniture
     if @listing.save
       redirect_to listing_path(@listing)
     else
@@ -22,22 +30,27 @@ class ListingsController < ApplicationController
   def edit
   end
 
+  def update
+    @listing.update(base_price: listing_params[:base_price])
+    @listing.furniture.update(listing_params[:furniture_attributes])
+    if @listing.save
+      redirect_to listing_path(@listing)
+    else
+      render "new"
+    end
+  end
+
   def show
   end
 
-  def update
-  end
-
-private
-
-
+  private
 
   def find_listing
     @listing = Listing.find(params[:id])
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, :furniture, photos: [])
+    params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id]).permit!
   end
 
 end
