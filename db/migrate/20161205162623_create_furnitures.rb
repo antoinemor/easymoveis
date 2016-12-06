@@ -3,8 +3,7 @@ class CreateFurnitures < ActiveRecord::Migration[5.0]
     create_table :furnitures do |t|
       t.string :name
       t.text :description
-      t.string :type
-      t.references :user, foreign_key: true
+      t.string :category
 
       t.timestamps
     end

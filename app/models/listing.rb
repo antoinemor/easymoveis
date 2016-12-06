@@ -1,6 +1,6 @@
 class Listing < ApplicationRecord
-  belongs_to :furniture
+  belongs_to :user
   has_many :bookings
-  validates :furniture, presence: true
+  has_many :furnitures
   validates :base_price, presence: true
 end

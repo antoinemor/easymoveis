@@ -1,8 +1,9 @@
 class Furniture < ApplicationRecord
-  belongs_to :user
   has_many :listings
   has_many :bookings, through: :listings
+  has_one :user, through: :listings
 
-  validates :name, uniqueness: true, presence: true, allow_blank: false
-  validates :description, :type, presence: true, allow_blank: false
+  validates :name,        presence: true
+  validates :description, presence: true
+  validates :category,    presence: true
 end
