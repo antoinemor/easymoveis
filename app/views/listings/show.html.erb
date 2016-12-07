@@ -14,7 +14,8 @@
         </div>
         <br>
         <strong>Listing info:</strong><br>
-        Base price: <%= @listing.base_price %>$
+        Base price: <%= @listing.base_price %>
+
     <% content_for(:after_js) do %>
       <%= javascript_tag do %>
         $(document).ready(function(){
