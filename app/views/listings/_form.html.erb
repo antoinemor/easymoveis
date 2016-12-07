@@ -1,0 +1,12 @@
+<%= simple_form_for @listing do |f| %>
+  <%= f.fields_for :furniture, @listing.furniture do |furniture_form| %>
+    <%= furniture_form.label :name %>
+    <%= furniture_form.text_field :name %> <br>
+    <%= furniture_form.label :description %>
+    <%= furniture_form.text_field :description %> <br>
+    <%= furniture_form.label :category %>
+    <%= furniture_form.text_field :category %> <br>
+  <% end %>
+  <%= f.input :base_price %>
+  <%= f.button :submit, class: "btn btn-green btn-block"  %>
+<% end %>
