@@ -20,7 +20,7 @@ class BookingsController < ApplicationController
     @booking.workflow_step = "E"
     @booking.user = current_user
     if @booking.save
-      redirect_to user_booking_list_path(@booking.id, @booking.listing), notice: 'Booking was successfully created.'
+      redirect_to user_bookings_path, notice: 'Booking was successfully created.'
     else
       render :new
     end
@@ -32,12 +32,12 @@ class BookingsController < ApplicationController
   def update
     @booking.workflow_step = "E"
     @booking.update(booking_params)
-    redirect_to user_booking_list_path(@booking.id, @booking.listing_id), notice: 'Booking was successfully updated.'
+    redirect_to user_bookings_path, notice: 'Booking was successfully updated.'
   end
 
   def cancel_booking
     @booking.update_attributes(workflow_step: "C")
-    redirect_to user_booking_list_path(@booking.id, @booking.listing_id), notice: 'Booking was successfully cancelated.'
+    redirect_to user_bookings_path, notice: 'Booking was successfully cancelated.'
   end
 
   def destroy
@@ -45,9 +45,8 @@ class BookingsController < ApplicationController
       redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
   end
 
-  def list_users
-    @user = User.find(current_user)
-    @bookings = @user.bookings
+  def user_bookings
+    @bookings = current_user.bookings
   end
 
   def approve_booking

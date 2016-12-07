@@ -1,0 +1,30 @@
+
+<% if @bookings %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <% @bookings.each do |booking| %>
+          <div class="listing-line">
+            <div class="listing-image">
+              <%= cl_image_tag booking.listing.furniture.photos.first.path, width: 250, height: 150, crop: :fill %>
+            </div>
+            <div class="listing-content text-center">
+              <strong><%= booking.listing.furniture.name %> </strong> <br>
+              Category: <%= booking.listing.furniture.category %> <br>
+              Description; <%= booking.listing.furniture.description %><br>
+              Start-date: <%= booking.start_date %><br>
+              End-date: <%= booking.end_date %><br>
+              Status: <%= booking.workflow_step %><br>
+            </div>
+            <div class="listing-actions text-center">
+            </div>
+          </div>
+        <% end %>
+        <br>
+        <%= link_to 'Back', root_path %> |
+      </div>
+    </div>
+  </div>
+<% else %>
+  <h3>You don't have any listing on the site!</h3>
+<% end %>

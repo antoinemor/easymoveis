@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
 
   # User bookings list
-  get '/user/:id/list_users', to: 'bookings#list_users', as: 'user_booking_list'
+  get '/booking/user_bookings', to: 'bookings#user_bookings', as: 'user_bookings'
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
