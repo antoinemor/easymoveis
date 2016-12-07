@@ -1,0 +1,15 @@
+<%= simple_form_for [@listing, @booking] do |f| %>
+<br>
+<p>Name: <% @listing.furniture.name %></p>
+<br>
+<p>Description: <% @listing.furniture.description %></p>
+<br>
+<p>Base Price: <% @listing.base_price %></p>
+<br>
+
+  <%= f.error_notification %>
+  <%= f.input :start_date %>
+  <%= f.input :end_date %>
+  <%= f.button :submit, class: "btn btn-block btn-green" %>
+<% end %>
+
