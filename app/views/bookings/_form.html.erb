@@ -1,7 +1,12 @@
-<h1>New Booking</h1>
+<%= simple_form_for [@listing, @booking] do |f| %>
+<br>
+<p>Name: <% @listing.furniture.name %></p>
+<br>
+<p>Description: <% @listing.furniture.description %></p>
+<br>
+<p>Base Price: <% @listing.base_price %></p>
 <br>
 
-<%= simple_form_for [@listing, @booking] do |f| %>
   <%= f.error_notification %>
   <%= f.input :start_date %>
   <%= f.input :end_date %>
