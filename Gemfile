@@ -21,6 +21,7 @@ gem 'cloudinary', '1.1.0'
 gem "attachinary", github: "assembler/attachinary"
 gem "jquery-fileupload-rails"
 gem "coffee-rails"
+gem "jquery-slick-rails"
 
 
 group :development, :test do
