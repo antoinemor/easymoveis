@@ -4,7 +4,7 @@ class BookingsController < ApplicationController
   before_action :find_listing, only: [:new, :create, :index, :update, :destroy]
 
   def index
-    @bookings = @listing.bookings
+    @bookings = @user.bookings
   end
 
   def show
@@ -13,7 +13,7 @@ class BookingsController < ApplicationController
   def new
     @booking = @listing.bookings.new
   end
-  
+
    def create
     @booking = @listing.bookings.new(booking_params)
     @booking.status = "E"
@@ -68,6 +68,11 @@ class BookingsController < ApplicationController
 
   private
 
+  # List bookings by workflow step
+  def list_booking_by_step(step)
+    @bookings = user.bookings.where(workflow_step: step)
+  end
+
   def find_listing
     @listing = listing.find(params[:listing_id])
   end
@@ -75,12 +80,18 @@ class BookingsController < ApplicationController
   def get_listing
     @listing = @booking.listing
   end
-  
+
+  # Get furniture data linked to listing
+  def get_furniture
+    @furniture = @booking.furniture
+  end
+
   def find_booking
     @booking = Booking.find(params[:id])
   end
-  
+
   def booking_params
-    params.require(:booking).permit(:check_in, :check_out, :status, :user_id, :listing_id)
+    params.require(:booking).permit(:end_date, :start_date, :workflow_step, :user_id, :listing_id)
   end
 end
+
