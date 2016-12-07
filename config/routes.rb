@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
 
-  # Devise routes
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  # Root path
+  root to: 'pages#home'
 
   # App routes
-  root to: 'pages#home'
   resources :listings do
     resources :bookings
     resources :furnitures
   end
+
+  # Devise routes
+  devise_for :users,
+    controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
+  # Attachinary
+  mount Attachinary::Engine => "/attachinary"
 end
