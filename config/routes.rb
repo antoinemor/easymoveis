@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
-  devise_for :users
+
+  # Devise routes
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
+  # App routes
   root to: 'pages#home'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :listings do
     resources :bookings
     resources :furnitures
