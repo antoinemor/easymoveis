@@ -1,12 +1,10 @@
 <%= simple_form_for @listing do |f| %>
-  <%= f.fields_for :furniture, @listing.furniture do |furniture_form| %>
-    <%= furniture_form.label :name %>
-    <%= furniture_form.text_field :name %> <br>
-    <%= furniture_form.label :description %>
-    <%= furniture_form.text_field :description %> <br>
-    <%= furniture_form.label :category %>
-    <%= furniture_form.text_field :category %> <br>
+  <%= f.simple_fields_for :furniture, @listing.furniture do |furniture_form| %>
+    <%= furniture_form.input :name %>
+    <%= furniture_form.input :description %>
+    <%= furniture_form.input :category %>
+    <%= furniture_form.input :photos, as: :attachinary %>
   <% end %>
   <%= f.input :base_price %>
-  <%= f.button :submit, class: "btn btn-green btn-block"  %>
+  <%= f.button :submit, class: "btn btn-block"  %>
 <% end %>

@@ -50,7 +50,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id]).permit!
+    params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
   end
 
 end
