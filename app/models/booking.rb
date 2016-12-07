@@ -5,6 +5,8 @@ class Booking < ApplicationRecord
 
   validate :start_date_before_end_date
   validate :start_date_before_past
+  validates :user, uniqueness: { scope: :listing,
+    message: "should happen once per user" }
 
   private
    def start_date_before_end_date
