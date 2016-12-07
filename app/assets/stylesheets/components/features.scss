@@ -1,0 +1,25 @@
+.feature {
+  background-color: white;
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+  padding: 20px;
+  margin: 5px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.feature-content {
+  flex: 1 1 auto,
+}
+
+.feature h3 {
+  font-size: 20px;
+}
+
+.feature p {
+  font-size: 16px;
+}
+
+.image-small {
+  width: 70px;
+}
