@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   # Root path
   root to: 'pages#home'
 
+  # User listings list
+  get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
+
   # App routes
   resources :listings do
     resources :bookings

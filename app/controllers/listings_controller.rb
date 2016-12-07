@@ -9,6 +9,10 @@ class ListingsController < ApplicationController
     @results = Listing.all
   end
 
+  def user_listings
+    @listings = current_user.listings
+  end
+
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
