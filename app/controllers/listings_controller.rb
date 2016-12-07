@@ -16,7 +16,7 @@ class ListingsController < ApplicationController
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
-    authorize @listing #
+    authorize @listing
   end
 
   def create
@@ -25,7 +25,7 @@ class ListingsController < ApplicationController
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
     @listing.furniture = @furniture
-    authorize @listing #
+    authorize @listing
     if @listing.save
       redirect_to listing_path(@listing)
     else

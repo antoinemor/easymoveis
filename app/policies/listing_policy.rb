@@ -1,6 +1,4 @@
 class ListingPolicy < ApplicationPolicy
-  before_action :find_listing, only: [:show, :edit, :update, :destroy]
-
   class Scope < Scope
     def resolve
       scope
@@ -12,18 +10,21 @@ class ListingPolicy < ApplicationPolicy
   end
 
   def create?
-    true #anyone can create a restaurant
+    true
   end
 
   def update?
+    user_is_owner_or_admin?
   end
 
   def destroy?
+    user_is_owner_or_admin?
   end
 
   private
 
   def user_is_owner_or_admin?
-    record.user == user || user.admin
+    record.user == user #|| user.admin
   end
 end
+
