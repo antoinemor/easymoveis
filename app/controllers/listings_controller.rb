@@ -6,7 +6,7 @@ class ListingsController < ApplicationController
     # city = params[:city]
     # furniture_type = params[:furniture_type]
     # @results = Listings.where(city: city, furniture_type: furniture_type)
-    @results = Listings.all
+    @results = Listing.all
   end
 
   def new
