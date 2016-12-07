@@ -6,12 +6,17 @@ class ListingsController < ApplicationController
     # city = params[:city]
     # furniture_type = params[:furniture_type]
     # @results = Listings.where(city: city, furniture_type: furniture_type)
-    @results = Listing.all
+    #@results = Listing.all
+    @results = policy_scope(Listing)
+  end
+
+  def show
   end
 
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
+    authorize @listing #
   end
 
   def create
@@ -20,6 +25,7 @@ class ListingsController < ApplicationController
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
     @listing.furniture = @furniture
+    authorize @listing #
     if @listing.save
       redirect_to listing_path(@listing)
     else
@@ -40,17 +46,14 @@ class ListingsController < ApplicationController
     end
   end
 
-  def show
-  end
-
   private
 
   def find_listing
     @listing = Listing.find(params[:id])
+    authorize @listing
   end
 
   def listing_params
     params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
   end
-
 end
