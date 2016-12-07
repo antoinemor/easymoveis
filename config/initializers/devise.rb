@@ -14,6 +14,12 @@ Devise.setup do |config|
   # with default "from" parameter.
   config.mailer_sender = 'hello@easymoveis.com.br'
 
+  config.omniauth :facebook, ENV["FB_ID"], ENV["FB_SECRET"],
+    scope: 'email',
+    info_fields: 'email, first_name, last_name',
+    image_size: 'square',  # 50x50, guaranteed ratio
+    secure_image_url: true
+
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
