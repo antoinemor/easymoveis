@@ -4,4 +4,5 @@ class Listing < ApplicationRecord
   has_one :furniture
   has_one :address
   validates :base_price, presence: true
+  accepts_nested_attributes_for :furniture
 end
