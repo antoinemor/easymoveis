@@ -37,7 +37,7 @@
               <% end %>
             </li>
             <li>
-              <%= link_to "#" do %>
+              <%= link_to user_listings_path do %>
                 <i class="fa fa-home"></i>  <%= t(".profile", default: "My listings") %>
               <% end %>
             </li>
@@ -72,7 +72,7 @@
       <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
         <li><%= link_to "New listing", new_listing_path %></li>
-        <li><%= link_to "My listings", "#" %></li>
+        <li><%= link_to "My listings", user_listings_path %></li>
         <li><%= link_to "My bookings", "#" %></li>
         <li><%= link_to destroy_user_session_path, method: :delete do %>
                   <%= t(".sign_out", default: "Sair") %>
