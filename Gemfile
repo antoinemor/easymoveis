@@ -25,6 +25,7 @@ gem "pundit"
 gem "jquery-slick-rails"
 gem 'remotipart', github: 'mshibuya/remotipart'
 gem 'rails_admin', '>= 1.0.0.rc'
+gem 'mailboxer'
 
 group :development, :test do
   gem 'binding_of_caller'

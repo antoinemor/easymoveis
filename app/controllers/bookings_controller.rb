@@ -8,11 +8,6 @@ class BookingsController < ApplicationController
     @results = policy_scope(Booking)
   end
 
-  #def user_bookings
-   # @bookings = current_user.bookings
-    #authorize @bookings
-  #end
-
   def show
   end
 

@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :listings
   has_many :furnitures
   has_attachment :photo
+  acts_as_messageable
 
   def self.find_for_facebook_oauth(auth)
     user_params = auth.to_h.slice(:provider, :uid)
@@ -27,6 +28,10 @@ class User < ApplicationRecord
     end
 
     return user
+  end
+
+  def name
+    "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
 end
