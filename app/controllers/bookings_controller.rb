@@ -1,36 +1,32 @@
 class BookingsController < ApplicationController
-  before_action :find_booking, only: [:show, :edit, :update, :destroy, :approve_booking, :reject_booking, :cancel_booking]
-  before_action :get_listing, only: [:show, :edit, :approve_booking, :reject_booking]
-  before_action :find_listing, only: [:new, :create, :index, :update, :destroy]
+  before_action :find_booking, only: [:show, :edit, :update, :destroy, :cancel_booking]
+  before_action :get_listing, only: [:show, :edit]
+  before_action :find_listing, only: [:new, :create, :update, :destroy]
   before_action :get_furniture, only: [:new]
 
   def index
-    @bookings = Listing.find(params[:listing_id]).bookings
-  end
-
-  # List all user's bookings
-  def user_bookings
-    @bookings = current_user.bookings
+    @results = policy_scope(Booking)
   end
 
   def show
   end
 
   def new
-    # first it's necessary check if the listing is already booked to the user
     if current_user.bookings.where(listing_id: (params[:listing_id]) ).present?
       redirect_to listing_path(params[:listing_id]), alert: 'This listing is already booked.'
     end
 
     @booking = @listing.bookings.new
+    authorize @booking
   end
 
    def create
     @booking = @listing.bookings.new(booking_params)
     @booking.workflow_step = "E"
     @booking.user = current_user
+    authorize @booking
     if @booking.save
-      redirect_to user_bookings_path, notice: 'Booking was successfully created.'
+      redirect_to bookings_path, notice: 'Booking was successfully created.'
     else
       render :new
     end
@@ -41,13 +37,14 @@ class BookingsController < ApplicationController
 
   def update
     @booking.workflow_step = "E"
+    authorize @booking
     @booking.update(booking_params)
-    redirect_to user_bookings_path, notice: 'Booking was successfully updated.'
+    redirect_to bookings_path, notice: 'Booking was successfully updated.'
   end
 
   def cancel_booking
     @booking.update_attributes(workflow_step: "C")
-    redirect_to user_bookings_path, notice: 'Booking was successfully cancelated.'
+    redirect_to bookings_path, notice: 'Booking was successfully cancelated.'
   end
 
   def destroy
@@ -57,7 +54,6 @@ class BookingsController < ApplicationController
 
   private
 
-  # List bookings by workflow step
   def list_booking_by_step(step)
     @bookings = user.bookings.where(workflow_step: step)
   end
@@ -70,13 +66,13 @@ class BookingsController < ApplicationController
     @listing = @booking.listing
   end
 
-  # Get furniture data linked to listing
   def get_furniture
     @furniture = @listing.furniture
   end
 
   def find_booking
     @booking = Booking.find(params[:id])
+    authorize @booking
   end
 
   def booking_params

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
+  get '/bookings', to: 'bookings#index', as: 'bookings'
+
 
   # App routes
   resources :listings do

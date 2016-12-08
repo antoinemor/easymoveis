@@ -1,0 +1,34 @@
+<h1>Show Booking</h1>
+
+<div class="gray-wrapper">
+  <div class="container">
+        <strong>Furniture info:</strong><br>
+        Name: <%= @listing.furniture.name %> <br>
+        Description: <%= @listing.furniture.description %> <br>
+        Category: <%= @listing.furniture.category %>  <br> <br>
+        Photos: <br>
+        <div class="autoplay">
+          <% @listing.furniture.photos.each do |photo| %>
+            <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
+          <% end %>
+        </div>
+        <br>
+        <strong>Listing info:</strong><br>
+        Base price: <%= @listing.base_price %>$
+    <% content_for(:after_js) do %>
+      <%= javascript_tag do %>
+        $(document).ready(function(){
+          $('.autoplay').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            });
+          });
+        <% end %>
+      <% end %>
+    </div>
+    <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id)  %>
+
+  </div>
+</div>

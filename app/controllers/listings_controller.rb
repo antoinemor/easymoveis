@@ -3,19 +3,16 @@ class ListingsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    # city = params[:city]
-    # furniture_type = params[:furniture_type]
-    # @results = Listings.where(city: city, furniture_type: furniture_type)
-    @results = Listing.all
+    @results = policy_scope(Listing)
   end
 
-  def user_listings
-    @listings = current_user.listings
+  def show
   end
 
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
+    authorize @listing
   end
 
   def create
@@ -24,6 +21,7 @@ class ListingsController < ApplicationController
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
     @listing.furniture = @furniture
+    authorize @listing
     if @listing.save
       redirect_to listing_path(@listing)
     else
@@ -44,10 +42,6 @@ class ListingsController < ApplicationController
     end
   end
 
-  def show
-  end
-
-  # Booking was approved and the furniture is waiting for deliver
   def approve_booking
     @listing.bookings.workflow_step = "A"
     @listing.bookings.save
@@ -66,7 +60,6 @@ class ListingsController < ApplicationController
     redirect_to listing_bookings_path(@listing.id), notice: 'The furniture was delivered to the client.'
   end
 
-  # The rental contract is finished
   def finish_booking
     @listing.bookings.workflow_step = "F"
     @listing.bookings.save
@@ -77,6 +70,7 @@ class ListingsController < ApplicationController
 
   def find_listing
     @listing = Listing.find(params[:id])
+    authorize @listing
   end
 
   def listing_params
@@ -86,6 +80,4 @@ class ListingsController < ApplicationController
   def find_booking
     @booking = Booking.find(params[:id])
   end
-
-
 end
