@@ -14,7 +14,7 @@
               Description; <%= booking.listing.furniture.description %><br>
               Start-date: <%= booking.start_date %><br>
               End-date: <%= booking.end_date %><br>
-              Status: <%= booking.workflow_step %><br>
+              Status: <%= Booking.text_wkf_step(booking.workflow_step) %><br>
             </div>
             <div class="listing-actions text-center">
             </div>

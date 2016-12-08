@@ -8,16 +8,17 @@ class BookingsController < ApplicationController
     @bookings = @user.bookings
   end
 
+  # List all user's bookings
+  def user_bookings
+    @bookings = current_user.bookings
+  end
+
   def show
   end
 
   def new
     # first it's necessary check if the listing is already booked to the user
     if current_user.bookings.where(listing_id: (params[:listing_id]) ).present?
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-      p current_user.bookings.where(listing_id: (params[:listing_id]) ).present?
-      puts ">>>>>>>>>>>>>>>>>>>>>>>>>>>    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-
       redirect_to listing_path(params[:listing_id]), alert: 'This listing is already booked.'
     end
 
@@ -52,10 +53,6 @@ class BookingsController < ApplicationController
   def destroy
     @booking.destroy
       redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
-  end
-
-  def user_bookings
-    @bookings = current_user.bookings
   end
 
   def approve_booking
