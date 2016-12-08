@@ -12,11 +12,16 @@ Rails.application.routes.draw do
 
   # App routes
   resources :listings do
+      member do
+        get '/approve', to: 'listing#approve_booking', as: 'approve'
+        get '/reject', to: 'listing#reject_booking', as: 'reject'
+        get '/rent', to: 'listing#rent_booking', as: 'rent'
+        get '/finish', to: 'listing#finish_booking', as: 'finish'
+      end
+
     resources :bookings
       member do
         get '/cancel', to: 'bookings#cancel_booking', as: 'cancel'
-        get '/approve', to: 'bookings#approve_booking', as: 'approve'
-        get '/reject', to: 'bookings#reject_booking', as: 'reject'
       end
     resources :furnitures
   end

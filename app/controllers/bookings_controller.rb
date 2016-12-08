@@ -55,23 +55,6 @@ class BookingsController < ApplicationController
       redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
   end
 
-  def approve_booking
-    @booking.workflow_step = "A"
-    @booking.save
-    redirect_to listing_bookings_path(@booking.listing_id), notice: 'Booking accepted.'
-  end
-
-  def reject_booking
-    if @booking.workflow_step == "A"
-      @booking.listing.vacancies += 1
-      @listing.save
-    end
-
-    @booking.workflow_step = "R"
-    @booking.save
-    redirect_to listing_bookings_path(@booking.listing_id), notice: 'Booking Rejected.'
-  end
-
   private
 
   # List bookings by workflow step
