@@ -26,6 +26,20 @@ Rails.application.routes.draw do
     resources :furnitures
   end
 
+  # Messaging routes
+  resources :conversations, only: [:index, :show, :destroy] do
+    collection do
+      delete :empty_trash
+    end
+    member do
+        post :reply
+        post :restore
+        post :mark_as_read
+      end
+  end
+
+  resources :messages, only: [:new, :create]
+
   # Devise routes
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
