@@ -16,6 +16,8 @@ class ListingsController < ApplicationController
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
+
+
   end
 
   def create
@@ -24,7 +26,14 @@ class ListingsController < ApplicationController
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
     @listing.furniture = @furniture
+
     if @listing.save
+
+      ambiance_params[:ambiance_ids].each do |ambiance_id|
+        next if ambiance_id == ""
+        @listing.ambiances << Ambiance.find(ambiance_id)
+      end
+
       redirect_to listing_path(@listing)
     else
       render "new"
@@ -35,9 +44,15 @@ class ListingsController < ApplicationController
   end
 
   def update
-    @listing.update(base_price: listing_params[:base_price])
+    @listing.update(listing_params)
     @listing.furniture.update(listing_params[:furniture_attributes])
     if @listing.save
+      @listing.ambiances.destroy_all
+      ambiance_params[:ambiance_ids].each do |ambiance_id|
+        next if ambiance_id == ""
+        @listing.ambiances << Ambiance.find(ambiance_id)
+      end
+
       redirect_to listing_path(@listing)
     else
       render "new"
@@ -54,7 +69,11 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
+    params.require(:listing).permit(:base_price, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
+  end
+
+  def ambiance_params
+    params.require(:listing).permit(ambiance_ids: [])
   end
 
 end

@@ -1,8 +1,29 @@
 class Listing < ApplicationRecord
+
+  PERIOD_OPTIONS = %w(3m 6m 9m 12m 18m +24m)
+
   belongs_to :user
   has_many :bookings
   has_one :furniture, dependent: :destroy
   has_one :address
+  has_many :listing_ambiances
+  has_many :ambiances, through: :listing_ambiances
+
   validates :base_price, presence: true
+  validates :period_min, presence: true
+  validates :period_max, presence: true
   accepts_nested_attributes_for :furniture
+  validates_inclusion_of :period_min, :in => PERIOD_OPTIONS, :allow_nil => true
+  validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true
+
+  validate :check_period_min_max
+
+
+  def check_period_min_max
+    if PERIOD_OPTIONS.index(period_min) > PERIOD_OPTIONS.index(period_max)
+      errors.add(:period_min, "Incorrect Period" )
+    end
+  end
+
+
 end
