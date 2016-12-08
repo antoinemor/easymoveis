@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  before_action :find_listing, only: [:show, :edit, :update, :destroy]
+  before_action :find_listing, only: [:show, :edit, :update, :destroy, :approve_booking, :reject_booking, :rent_booking, :finish_booking]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
@@ -47,6 +47,32 @@ class ListingsController < ApplicationController
   def show
   end
 
+  # Booking was approved and the furniture is waiting for deliver
+  def approve_booking
+    @listing.bookings.workflow_step = "A"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'Booking approved.'
+  end
+
+  def reject_booking
+    @listing.bookings.workflow_step = "R"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'Booking Rejected.'
+  end
+
+  def rent_booking
+    @listing.bookings.workflow_step = "T"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'The furniture was delivered to the client.'
+  end
+
+  # The rental contract is finished
+  def finish_booking
+    @listing.bookings.workflow_step = "F"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'The rental operation is finished.'
+  end
+
   private
 
   def find_listing
@@ -56,5 +82,10 @@ class ListingsController < ApplicationController
   def listing_params
     params.require(:listing).permit(:base_price, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
   end
+
+  def find_booking
+    @booking = Booking.find(params[:id])
+  end
+
 
 end
