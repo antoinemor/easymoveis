@@ -40,6 +40,11 @@ Rails.application.routes.draw do
 
   resources :messages, only: [:new, :create]
 
+  # App pages routes
+  get '/about',   to: 'pages#about',   as: 'about'
+  get '/contact', to: 'pages#contact', as: 'contact'
+  get '/team',    to: 'pages#team',    as: 'team'
+
   # Devise routes
   devise_for :users,
     controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
