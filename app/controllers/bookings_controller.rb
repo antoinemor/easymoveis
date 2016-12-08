@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
   before_action :get_furniture, only: [:new]
 
   def index
-    @bookings = @user.bookings
+    @bookings = Listing.find(params[:listing_id]).bookings
   end
 
   # List all user's bookings

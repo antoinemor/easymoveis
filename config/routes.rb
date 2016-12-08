@@ -26,6 +26,20 @@ Rails.application.routes.draw do
     resources :furnitures
   end
 
+  # Messaging routes
+  resources :conversations, only: [:index, :show, :destroy] do
+    collection do
+      delete :empty_trash
+    end
+    member do
+        post :reply
+        post :restore
+        post :mark_as_read
+      end
+  end
+
+  resources :messages, only: [:new, :create]
+
   # App pages routes
   get '/about',   to: 'pages#about',   as: 'about'
   get '/contact', to: 'pages#contact', as: 'contact'
