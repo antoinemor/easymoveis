@@ -1,24 +1,51 @@
 Rails.application.routes.draw do
 
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # Root path
   root to: 'pages#home'
 
   # User bookings list
-  get '/user/:id/list_users', to: 'bookings#list_users', as: 'user_booking_list'
+  get '/booking/user_bookings', to: 'bookings#user_bookings', as: 'user_bookings'
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
+  get '/bookings', to: 'bookings#index', as: 'bookings'
+
 
   # App routes
   resources :listings do
+      member do
+        get '/approve', to: 'listing#approve_booking', as: 'approve'
+        get '/reject', to: 'listing#reject_booking', as: 'reject'
+        get '/rent', to: 'listing#rent_booking', as: 'rent'
+        get '/finish', to: 'listing#finish_booking', as: 'finish'
+      end
+
     resources :bookings
       member do
         get '/cancel', to: 'bookings#cancel_booking', as: 'cancel'
-        get '/approve', to: 'bookings#approve_booking', as: 'approve'
-        get '/reject', to: 'bookings#reject_booking', as: 'reject'
       end
     resources :furnitures
   end
+
+  # Messaging routes
+  resources :conversations, only: [:index, :show, :destroy] do
+    collection do
+      delete :empty_trash
+    end
+    member do
+        post :reply
+        post :restore
+        post :mark_as_read
+      end
+  end
+
+  resources :messages, only: [:new, :create]
+
+  # App pages routes
+  get '/about',   to: 'pages#about',   as: 'about'
+  get '/contact', to: 'pages#contact', as: 'contact'
+  get '/team',    to: 'pages#team',    as: 'team'
 
   # Devise routes
   devise_for :users,

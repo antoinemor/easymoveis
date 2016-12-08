@@ -1,9 +1,12 @@
-<h1>New Booking</h1>
-<br>
 
-<div class="box-large-white">
-  <h2 class="text-center">Novo Booking</h2>
-  <%= render 'form', booking: @booking, listing: @listing %> <br>
-  <%= link_to 'Back', root_path, class: "btn btn-default btn-block" %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <div class="box-white box-margin-height">
+      <h2 class="text-center" style="margin-top: 5px;">New booking</h2>
+        <%= render 'form' %> <br>
+        <%= link_to 'Back', root_path, class: "btn btn-default btn-block" %>
+      </div>
+    </div>
+  </div>
 </div>
-

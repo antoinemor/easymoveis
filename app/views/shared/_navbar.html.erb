@@ -19,10 +19,10 @@
     <% if user_signed_in? %>
 
       <!-- Notification -->
-      <%= link_to "#", class: "navbar-wagon-item navbar-wagon-link" do %>
+      <%= link_to conversations_path, class: "navbar-wagon-item navbar-wagon-link" do %>
         <div class="badge-container">
           <i class="fa fa-envelope-o"></i>
-          <div class="badge badge-blue">3</div>
+          <div class="badge badge-red"><%= current_user.mailbox.inbox({:read => false}).count %></div>
         </div>
       <% end %>
 
@@ -37,12 +37,12 @@
               <% end %>
             </li>
             <li>
-              <%= link_to user_listings_path do %>
+              <%= link_to listings_path do %>
                 <i class="fa fa-home"></i>  <%= t(".profile", default: "My listings") %>
               <% end %>
             </li>
             <li>
-              <%= link_to "#" do %>
+              <%= link_to bookings_path do %>
                 <i class="fa fa-bed"></i>  <%= t(".profile", default: "My bookings") %>
               <% end %>
             </li>
@@ -73,7 +73,7 @@
       <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
         <li><%= link_to "New listing", new_listing_path %></li>
         <li><%= link_to "My listings", user_listings_path %></li>
-        <li><%= link_to "My bookings", "#" %></li>
+        <li><%= link_to "My bookings", user_bookings_path %></li>
         <li><%= link_to destroy_user_session_path, method: :delete do %>
                   <%= t(".sign_out", default: "Sair") %>
               <% end %>

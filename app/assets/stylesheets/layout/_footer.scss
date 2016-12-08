@@ -1,11 +1,12 @@
 .footer {
+  height: 120px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   background-color: $brand-color;
   align-items: center;
-  padding: 20px 30px;
-  color: #D7D7D7;
+  padding: 20px 40px;
+  color: white;
   p {
     margin-top: 10px;
     font-size: 14px;
@@ -18,25 +19,25 @@
   a i {
     font-size: 30px;
     margin: 0 10px;
-    color: #D7D7D7;
+    color: white;
     transition: .3s;
     &:hover{
-      color: white;
+      color: #A6A6A6;
     }
   }
   i {
-    color: #D7D7D7;
+    color: white;
   }
 }
 
 .footer-links {
   flex: 0 1 auto;
   a {
-    color: #D7D7D7;
+    color: white;
     text-decoration: none;
     transition: .3s;
     &:hover {
-      color: white;
+      color: #A6A6A6;
     }
   }
 }

@@ -1,22 +1,19 @@
 class ListingsController < ApplicationController
-  before_action :find_listing, only: [:show, :edit, :update, :destroy]
+  before_action :find_listing, only: [:show, :edit, :update, :destroy, :approve_booking, :reject_booking, :rent_booking, :finish_booking]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    # city = params[:city]
-    # furniture_type = params[:furniture_type]
-    # @results = Listings.where(city: city, furniture_type: furniture_type)
-    @results = Listing.all
+    @results = policy_scope(Listing)
   end
 
-  def user_listings
-    @listings = current_user.listings
+  def show
   end
 
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
 
+    authorize @listing
 
   end
 
@@ -26,6 +23,8 @@ class ListingsController < ApplicationController
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
     @listing.furniture = @furniture
+
+    authorize @listing
 
     if @listing.save
 
@@ -59,13 +58,35 @@ class ListingsController < ApplicationController
     end
   end
 
-  def show
+  def approve_booking
+    @listing.bookings.workflow_step = "A"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'Booking approved.'
+  end
+
+  def reject_booking
+    @listing.bookings.workflow_step = "R"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'Booking Rejected.'
+  end
+
+  def rent_booking
+    @listing.bookings.workflow_step = "T"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'The furniture was delivered to the client.'
+  end
+
+  def finish_booking
+    @listing.bookings.workflow_step = "F"
+    @listing.bookings.save
+    redirect_to listing_bookings_path(@listing.id), notice: 'The rental operation is finished.'
   end
 
   private
 
   def find_listing
     @listing = Listing.find(params[:id])
+    authorize @listing
   end
 
   def listing_params
@@ -76,4 +97,7 @@ class ListingsController < ApplicationController
     params.require(:listing).permit(ambiance_ids: [])
   end
 
+  def find_booking
+    @booking = Booking.find(params[:id])
+  end
 end
