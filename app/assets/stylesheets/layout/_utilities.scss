@@ -6,8 +6,8 @@
 
 // Paddings
 .padded {
-  padding-top: 5em;
-  padding-bottom: 5em;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 
 // Backgrounds
@@ -24,13 +24,7 @@
   background: #3b5998;
 }
 
-// Wrappers
-.white-wrapper {
-  background: white;
-  padding: 20px 0;
-}
-
-.gray-wrapper {
+// General
+body {
   background-color: rgba(0,0,0,0.03);
-  padding: 20px 0;
 }

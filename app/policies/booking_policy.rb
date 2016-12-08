@@ -1,12 +1,16 @@
 class BookingPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope.all
+      if user.admin?
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 
   def show?
-    true
+    user_is_owner_or_admin?
   end
 
   def create?
@@ -21,30 +25,17 @@ class BookingPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
-  def cancel_booking?
+  def user_bookings
     user_is_owner_or_admin?
   end
 
-  def list_users?
+  def cancel_booking
     user_is_owner_or_admin?
   end
-
-  def approve_booking?
-    user_is_offering?
-  end
-
-  def reject_booking?
-    user_is_offering?
-  end
-
 
   private
 
   def user_is_owner_or_admin?
     record.user == user || user.admin
-  end
-
-  def user_is_offering?
-    record.listing.user == user || user.admin
   end
 end

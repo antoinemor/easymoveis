@@ -44,11 +44,11 @@ ActiveRecord::Schema.define(version: 20161207180350) do
   create_table "bookings", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
-    t.string   "status"
     t.integer  "user_id"
     t.integer  "listing_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "workflow_step"
     t.index ["listing_id"], name: "index_bookings_on_listing_id", using: :btree
     t.index ["user_id"], name: "index_bookings_on_user_id", using: :btree
   end

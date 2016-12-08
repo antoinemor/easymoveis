@@ -1,0 +1,15 @@
+.btn-red {
+  background-color: $brand-color;
+  border: 0;
+  color: white;
+  transition: .3s;
+  &:hover {
+    background-color: #A70003;
+    border: 0;
+    color: white;
+  }
+}
+
+.btn-margin {
+  margin: 3px 0;
+}

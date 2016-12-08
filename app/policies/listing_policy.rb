@@ -1,7 +1,11 @@
 class ListingPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
+      if user.admin?
+        scope.all
+      else
+        scope.where(user: user)
+      end
     end
   end
 
@@ -18,6 +22,22 @@ class ListingPolicy < ApplicationPolicy
   end
 
   def destroy?
+    user_is_owner_or_admin?
+  end
+
+  def approve_booking
+    user_is_owner_or_admin?
+  end
+
+  def reject_booking
+    user_is_owner_or_admin?
+  end
+
+  def rent_booking
+    user_is_owner_or_admin?
+  end
+
+  def finish_booking
     user_is_owner_or_admin?
   end
 

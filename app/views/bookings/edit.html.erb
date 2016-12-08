@@ -1,0 +1,12 @@
+<h1>Editing Booking</h1>
+<br>
+<p>Name: <% @furniture.name %></p>
+<br>
+<p>Description: <% @furniture.description %></p>
+<br>
+<p>Base Price: <% @listing.base_price %></p>
+<br>
+
+<%= render 'form', booking: @booking %>
+
+<%= link_to 'Back', user_bookings_path(@booking.user_id)  %>
