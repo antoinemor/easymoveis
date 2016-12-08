@@ -1,34 +1,64 @@
-<h1>Show listing</h1>
+<div class="padded">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-1 ">
+      <div class="box-white">
+        <h2 style="margin-top: 5px;"><%= @listing.furniture.name %> </h2>
 
-<div class="gray-wrapper">
-  <div class="container">
-        <strong>Furniture info:</strong><br>
-        Name: <%= @listing.furniture.name %> <br>
-        Description: <%= @listing.furniture.description %> <br>
-        Category: <%= @listing.furniture.category %>  <br> <br>
-        Photos: <br>
-        <div class="autoplay">
-          <% @listing.furniture.photos.each do |photo| %>
-            <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
-          <% end %>
+        <Strong>Description: </Strong><%= @listing.furniture.description %> <br>
+        <Strong>Category: </Strong><%= @listing.furniture.category %>  <br>
+        <Strong>Ambiance: </Strong><% @listing.ambiances.each do |ambiance| %>
+          <%=ambiance.name%>,
+        <%end%>
+        <div style= "padding:  20px 40px 5px 40px;">
+          <div class="slider-for">
+            <% @listing.furniture.photos.each do |photo| %>
+              <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
+            <% end %>
+          </div>
+          <div class="slider-nav">
+            <% @listing.furniture.photos.each do |photo| %>
+              <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
+            <% end %>
+          </div>
+          <br>
         </div>
-        <br>
-        <strong>Listing info:</strong><br>
-        Base price: <%= @listing.base_price %>$
-    <% content_for(:after_js) do %>
-      <%= javascript_tag do %>
-        $(document).ready(function(){
-          $('.autoplay').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            autoplay: true,
-            autoplaySpeed: 2000,
-            });
-          });
-        <% end %>
-      <% end %>
+      </div>
     </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3 " class="text-center">
+      <div class="box-white" style= "padding:  30px 20px 5px 20px;">
+        <strong>Listing information:</strong>
+        <br>
+        <p style="margin-top: 5px;"> Base price: R$ <Strong style="color: red"><%= @listing.base_price %></Strong> / per month </p>
+        <p style="margin-top: 5px;"> Rental duration: from <Strong style="color: red"> <%=@listing.period_min%></Strong> to <Strong style="color: red"><%= @listing.period_max%><Strong style="color: red"  </p>
+
+
+      </div>
+    </div>
+
     <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id)  %>
 
   </div>
 </div>
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('.slider-for').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrows: false,
+        fade: true,
+        asNavFor: '.slider-nav'
+      });
+      $('.slider-nav').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        asNavFor: '.slider-for',
+        dots: true,
+        centerMode: true,
+        focusOnSelect: true
+      });
+    });
+  <% end %>
+<% end %>

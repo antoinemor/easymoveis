@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161208161406) do
+ActiveRecord::Schema.define(version: 20161208183507) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +25,14 @@ ActiveRecord::Schema.define(version: 20161208161406) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["listing_id"], name: "index_addresses_on_listing_id", using: :btree
+  end
+
+  create_table "ambiances", force: :cascade do |t|
+    t.integer  "listing_ambiance_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "name"
+    t.index ["listing_ambiance_id"], name: "index_ambiances_on_listing_ambiance_id", using: :btree
   end
 
   create_table "attachinary_files", force: :cascade do |t|
@@ -65,11 +74,22 @@ ActiveRecord::Schema.define(version: 20161208161406) do
     t.index ["user_id"], name: "index_furnitures_on_user_id", using: :btree
   end
 
+  create_table "listing_ambiances", force: :cascade do |t|
+    t.integer  "listing_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "ambiance_id"
+    t.index ["ambiance_id"], name: "index_listing_ambiances_on_ambiance_id", using: :btree
+    t.index ["listing_id"], name: "index_listing_ambiances_on_listing_id", using: :btree
+  end
+
   create_table "listings", force: :cascade do |t|
     t.float    "base_price"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "period_min"
+    t.string   "period_max"
     t.index ["user_id"], name: "index_listings_on_user_id", using: :btree
   end
 
@@ -154,10 +174,13 @@ ActiveRecord::Schema.define(version: 20161208161406) do
   end
 
   add_foreign_key "addresses", "listings"
+  add_foreign_key "ambiances", "listing_ambiances"
   add_foreign_key "bookings", "listings"
   add_foreign_key "bookings", "users"
   add_foreign_key "furnitures", "listings"
   add_foreign_key "furnitures", "users"
+  add_foreign_key "listing_ambiances", "ambiances"
+  add_foreign_key "listing_ambiances", "listings"
   add_foreign_key "listings", "users"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
