@@ -12,6 +12,7 @@ class ListingsController < ApplicationController
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
+    @listing.address = Address.new
 
     authorize @listing
 
@@ -22,6 +23,7 @@ class ListingsController < ApplicationController
     @listing.user = current_user
     @furniture = Furniture.new(listing_params[:furniture_attributes])
     @furniture.user = current_user
+    @listing.address = Address.new(listing_params[:address_attributes])
     @listing.furniture = @furniture
 
     authorize @listing
@@ -90,7 +92,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
+    params.require(:listing).permit(:base_price, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []], address_attributes: [:address, :city, :zip_code, :country, :listing_id]).permit!
   end
 
   def ambiance_params
