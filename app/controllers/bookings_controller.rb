@@ -26,6 +26,7 @@ class BookingsController < ApplicationController
     @booking.user = current_user
     authorize @booking
     if @booking.save
+      current_user.send_message(@listing.user, "Hey #{@listing.user.first_name}!\n I want to book #{@listing.furniture.name}! Please accept my demand as soon as possible! \n Cheers! \n #{current_user.first_name}", "You have a new booking!")
       redirect_to bookings_path, notice: 'Booking was successfully created.'
     else
       render :new
@@ -44,7 +45,7 @@ class BookingsController < ApplicationController
 
   def cancel_booking
     @booking.update_attributes(workflow_step: "C")
-    redirect_to bookings_path, notice: 'Booking was successfully cancelated.'
+    redirect_to bookings_path, notice: 'Booking was successfully cancelled.'
   end
 
   def destroy

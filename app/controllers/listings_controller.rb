@@ -61,12 +61,14 @@ class ListingsController < ApplicationController
   def approve_booking
     @listing.bookings.workflow_step = "A"
     @listing.bookings.save
+    current_user.send_message(@listing.bookings.user, "Hey #{@listing.bookings.user.first_name}!\n Congratulations! I have accepted your booking for #{@listing.furniture}! It will be delivered to you soon! \n Cheers! \n #{current_user.first_name}", "Your booking was accepted!")
     redirect_to listing_bookings_path(@listing.id), notice: 'Booking approved.'
   end
 
   def reject_booking
     @listing.bookings.workflow_step = "R"
     @listing.bookings.save
+    current_user.send_message(@listing.bookings.user, "Hey #{@listing.bookings.user.first_name}!\n Unfortunately, I have to reject your booking for #{@listing.furniture}! Sorry about that! \n Thanks! \n #{current_user.first_name}", "Your booking was rejected.")
     redirect_to listing_bookings_path(@listing.id), notice: 'Booking Rejected.'
   end
 
