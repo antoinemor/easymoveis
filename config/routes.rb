@@ -6,10 +6,11 @@ Rails.application.routes.draw do
 
   # User bookings list
   get '/booking/user_bookings', to: 'bookings#user_bookings', as: 'user_bookings'
+  get '/bookings', to: 'bookings#index', as: 'bookings'
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
-  get '/bookings', to: 'bookings#index', as: 'bookings'
+  get '/search', to: 'listings#search', as: 'search'
 
 
   # App routes
