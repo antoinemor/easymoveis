@@ -11,11 +11,14 @@
             <div class="listing-content text-center">
               <strong><%= listing.furniture.name %> </strong> <br>
               Category: <%= listing.furniture.category %><br>
-              Status: <%= Booking.text_wkf_step(listing.bookings.first.workflow_step) %><br>
+              Status:
+              <%= listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(listing.bookings.first.workflow_step) %><br>
             </div>
             <div class="listing-actions text-center">
+                <% listing.bookings.first.nil? ? status = "A" : status = listing.bookings.first.workflow_step %>
                 <%= link_to "Show listing", listing_path(listing), class: "btn btn-default"  %>
                 <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
+                <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-default" if status == "P" %>
             </div>
           </div>
         <% end %>

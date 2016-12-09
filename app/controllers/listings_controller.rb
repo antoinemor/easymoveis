@@ -59,27 +59,29 @@ class ListingsController < ApplicationController
   end
 
   def approve_booking
-    @listing.bookings.workflow_step = "A"
-    @listing.bookings.save
-    redirect_to listing_bookings_path(@listing.id), notice: 'Booking approved.'
+    puts "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    puts @listing.bookings.first
+    @listing.bookings.first.workflow_step = "A"
+    @listing.bookings.first.save
+    redirect_to listings_path, notice: 'Booking approved.'
   end
 
   def reject_booking
-    @listing.bookings.workflow_step = "R"
-    @listing.bookings.save
-    redirect_to listing_bookings_path(@listing.id), notice: 'Booking Rejected.'
+    @listing.bookings.first.workflow_step = "R"
+    @listing.bookings.first.save
+    redirect_to listings_path, notice: 'Booking Rejected.'
   end
 
   def rent_booking
-    @listing.bookings.workflow_step = "T"
-    @listing.bookings.save
-    redirect_to listing_bookings_path(@listing.id), notice: 'The furniture was delivered to the client.'
+    @listing.bookings.first.workflow_step = "T"
+    @listing.bookings.first.save
+    redirect_to listings_path, notice: 'The furniture was delivered to the client.'
   end
 
   def finish_booking
-    @listing.bookings.workflow_step = "F"
-    @listing.bookings.save
-    redirect_to listing_bookings_path(@listing.id), notice: 'The rental operation is finished.'
+    @listing.bookings.first.workflow_step = "F"
+    @listing.bookings.first.save
+    redirect_to listings_path, notice: 'The rental operation is finished.'
   end
 
   private

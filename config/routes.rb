@@ -16,10 +16,10 @@ Rails.application.routes.draw do
   # App routes
   resources :listings do
       member do
-        get '/approve', to: 'listing#approve_booking', as: 'approve'
-        get '/reject', to: 'listing#reject_booking', as: 'reject'
-        get '/rent', to: 'listing#rent_booking', as: 'rent'
-        get '/finish', to: 'listing#finish_booking', as: 'finish'
+        get '/approve', to: 'listings#approve_booking', as: 'approve'
+        get '/reject', to: 'listings#reject_booking', as: 'reject'
+        get '/rent', to: 'listings#rent_booking', as: 'rent'
+        get '/finish', to: 'listings#finish_booking', as: 'finish'
       end
 
     resources :bookings, except: [:destroy]
