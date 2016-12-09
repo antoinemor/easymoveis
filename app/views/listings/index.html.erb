@@ -1,46 +1,27 @@
-<div class="padded">
-  <div class="row">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-      <div class="box-white">
-        <% word = @results.length >= 2 ? 's' : '' %>
-        <h4 class="text-center" style="margin: 0"><%= @results.length %> result<%= word %> of furniture</h4>
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="row">
-    <div class="col-xs-12 col-sm-7 col-sm-offset-1">
-      <div class="box-white text-center">
-        <h4 class="text-center">Filters</h4>
-        <div class="btn btn-default">Filter 1</div>
-        <div class="btn btn-default">Filter 2</div>
-        <div class="btn btn-default">Filter 3</div>
-        <div class="btn btn-default">Filter 4</div>
-      </div>
-      <br>
-      <div class="search-results">
-        <div class="card-container">
-          <div class="row">
-            <% @results.each do |listing| %>
-              <div class="col-xs-12 col-sm-6">
-                <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)),
-         url('<%= cl_image_path listing.furniture.photos.first.path %>')">
-                  <div class="card-avatar">
-                    <%= cl_image_tag avatar_image(current_user), width: 100, height: 100, crop: :fill, gravity: :face, class: "avatar-bordered" %>
-                  </div>
-                  <div class="card-title"><%= listing.furniture.name %></div>
-                  <%= link_to '#', listing_path(listing), class: "card-link" %>
-                </div>
-              </div>
-            <% end %>
+<h1>My Listings</h1>
+<% if @listings %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <% @listings.each do |listing| %>
+          <div class="listing-line">
+            <div class="listing-image">
+              <%= cl_image_tag listing.furniture.photos.first.path, width: 250, height: 150, crop: :fill %>
+            </div>
+            <div class="listing-content text-center">
+              <strong><%= listing.furniture.name %> </strong> <br>
+              Category: <%= listing.furniture.category %><br>
+              Status: <%= Booking.text_wkf_step(listing.bookings.first.workflow_step) %><br>
+            </div>
+            <div class="listing-actions text-center">
+                <%= link_to "Show listing", listing_path(listing), class: "btn btn-default"  %>
+                <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-      <div class="box-white" style="padding: 0">
-        <div id="map" style="height: 600px">Map</div>
+        <% end %>
       </div>
     </div>
   </div>
-</div>
+<% else %>
+  <h3>You don't have any listing on the site!</h3>
+<% end %>

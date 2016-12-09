@@ -18,8 +18,10 @@ class Booking < ApplicationRecord
                       'T' => 'Rented',
                       'F' => 'Finished'}
 
-  def self.text_wkf_step(workflow_step)
-    resp = @workflowstep_list[workflow_step]
+  # Search for the booking and recovers it's status
+  def self.text_wkf_step(step)
+
+    resp = step.nil? ? 'Available' : @workflowstep_list[step]
   end
 
   private

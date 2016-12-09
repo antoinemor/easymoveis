@@ -30,13 +30,19 @@
         <strong>Listing information:</strong>
         <br>
         <p style="margin-top: 5px;"> Base price: R$ <Strong style="color: red"><%= @listing.base_price %></Strong> / per month </p>
-        <p style="margin-top: 5px;"> Rental duration: from <Strong style="color: red"> <%=@listing.period_min%></Strong> to <Strong style="color: red"><%= @listing.period_max%><Strong style="color: red"  </p>
+        <p style="margin-top: 5px;"> Rental duration: from <Strong style="color: red"> <%=@listing.period_min%></Strong> to <Strong style="color: red"><%= @listing.period_max%></Strong></p>
 
+        <% booking = Booking.where(listing_id: @listing.id) %>
+        <p style="margin-top: 5px;"> Status: <Strong style="color: red"> <%= Booking.text_wkf_step(@listing.bookings.first.workflow_step) %></Strong> </p>
 
       </div>
     </div>
 
     <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id)  %>
+    <% if booking.nil? %>
+      <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
+      <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
+    <% end %>
 
   </div>
 </div>

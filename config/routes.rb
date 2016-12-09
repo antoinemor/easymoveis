@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # User bookings list
   get '/booking/user_bookings', to: 'bookings#user_bookings', as: 'user_bookings'
 
+
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
   get '/bookings', to: 'bookings#index', as: 'bookings'
@@ -21,12 +22,11 @@ Rails.application.routes.draw do
         get '/finish', to: 'listing#finish_booking', as: 'finish'
       end
 
-    resources :bookings
-      member do
-        get '/cancel', to: 'bookings#cancel_booking', as: 'cancel'
-      end
+    resources :bookings, except: [:destroy]
     resources :furnitures
   end
+
+  resources :bookings, only: [:destroy]
 
   # Messaging routes
   resources :conversations, only: [:index, :show, :destroy] do
