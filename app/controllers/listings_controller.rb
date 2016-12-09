@@ -2,6 +2,11 @@ class ListingsController < ApplicationController
   before_action :find_listing, only: [:show, :edit, :update, :destroy, :approve_booking, :reject_booking, :rent_booking, :finish_booking]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
+  def search
+    @results = Listing.all
+    authorize @results
+  end
+
   def index
     @listings = policy_scope(Listing)
   end
@@ -59,8 +64,6 @@ class ListingsController < ApplicationController
   end
 
   def approve_booking
-    puts "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
-    puts @listing.bookings.first
     @listing.bookings.first.workflow_step = "A"
     @listing.bookings.first.save
     redirect_to listings_path, notice: 'Booking approved.'

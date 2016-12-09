@@ -6,3 +6,6 @@
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
 //= require jquery.slick
+//= require moment
+//= require bootstrap-datetimepicker
+//= require pickers
