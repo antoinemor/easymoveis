@@ -1,6 +1,6 @@
 <div class="padded">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-6 col-md-offset-1 ">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-2 ">
       <div class="box-white">
         <h2 style="margin-top: 5px;"><%= @listing.furniture.name %> </h2>
 
@@ -9,12 +9,13 @@
         <Strong>Ambiance: </Strong><% @listing.ambiances.each do |ambiance| %>
           <%=ambiance.name%>,
         <%end%>
-        <div style= "padding:  20px 40px 5px 40px;">
+        <div style= "padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
           <div class="slider-for">
             <% @listing.furniture.photos.each do |photo| %>
-              <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
+              <%= cl_image_tag photo.path, width: 1024, height:768, crop: :fill%>
             <% end %>
           </div>
+
           <div class="slider-nav">
             <% @listing.furniture.photos.each do |photo| %>
               <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
@@ -25,19 +26,36 @@
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-3 " class="text-center">
+    <div class="col-xs-12 col-sm-6 col-md-3 text-center" >
       <div class="box-white" style= "padding:  30px 20px 5px 20px;">
         <strong>Listing information:</strong>
         <br>
         <p style="margin-top: 5px;"> Base price: R$ <Strong style="color: red"><%= @listing.base_price %></Strong> / per month </p>
-        <p style="margin-top: 5px;"> Rental duration: from <Strong style="color: red"> <%=@listing.period_min%></Strong> to <Strong style="color: red"><%= @listing.period_max%><Strong style="color: red"  </p>
-
-
+        <p style="margin: 5px 0px 10px 0px;"> Rental duration: from <Strong style="color: red;"> <%=@listing.period_min%></Strong> to <Strong style="color: red;"><%= @listing.period_max%></Strong></p>
+        <br>
+        <%= link_to 'Rent', new_listing_booking_path(@listing.id), class: "btn btn-red"%>
+         <br>
       </div>
     </div>
 
-    <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id)  %>
 
+
+  </div>
+</div>
+
+<div class="padded">
+  <div class="row" style="border: 1px solid grey">
+    <p style="margin: 10px 0px 0px 40px"> See also in the same ambiances </p>
+    <div class="autoplay" style= "margin:  20px 0px 20px 0px;">
+      <%@listing.ambiances.each do |ambiance| %>
+        <%results= Listing.all.select{|l| l.ambiances.include?(ambiance)}%>
+        <%results.each do |result|%>
+          <% next if result == @listing%>
+          <% next unless result.furniture.photos.first.present? %>
+            <%= cl_image_tag result.furniture.photos.first.path, width: 300, height:200, crop: :fill %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
 
@@ -59,6 +77,12 @@
         centerMode: true,
         focusOnSelect: true
       });
+      $('.autoplay').slick({
+      slidesToShow: 10,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+});
     });
   <% end %>
 <% end %>
