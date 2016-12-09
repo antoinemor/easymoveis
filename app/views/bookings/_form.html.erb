@@ -8,8 +8,8 @@
 <br>
 
   <%= f.error_notification %>
-  <%= f.input :start_date %>
-  <%= f.input :end_date %>
-  <%= f.button :submit, class: "btn btn-block btn-green" %>
+  <%= f.input :start_date, as: :date_picker, placeholder: 'mm/dd/yyyy'  %>
+  <%= f.input :end_date, as: :date_picker, placeholder: 'mm/dd/yyyy'  %>
+  <%= f.button :submit, class: "btn btn-block btn-primary" %>
 <% end %>
 
