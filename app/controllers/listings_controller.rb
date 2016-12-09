@@ -12,6 +12,7 @@ class ListingsController < ApplicationController
   end
 
   def show
+    @results = policy_scope(Listing)
   end
 
   def new
