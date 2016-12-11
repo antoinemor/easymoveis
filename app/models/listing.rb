@@ -5,14 +5,17 @@ class Listing < ApplicationRecord
   belongs_to :user
   has_many :bookings
   has_one :furniture, dependent: :destroy
-  has_one :address
-  has_many :listing_ambiances
+  has_one :address, dependent: :destroy
+  has_many :listing_ambiances, dependent: :destroy
   has_many :ambiances, through: :listing_ambiances
+
+  accepts_nested_attributes_for :furniture
+  accepts_nested_attributes_for :address
 
   validates :base_price, presence: true
   validates :period_min, presence: true
   validates :period_max, presence: true
-  accepts_nested_attributes_for :furniture
+
   validates_inclusion_of :period_min, :in => PERIOD_OPTIONS, :allow_nil => true
   validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true
 

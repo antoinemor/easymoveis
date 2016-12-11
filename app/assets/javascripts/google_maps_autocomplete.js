@@ -1,10 +1,10 @@
 $(document).ready(function() {
-  var base_address = $('#base_address').get(0);
+  var listing_address_attributes_address_line = $('#listing_address_attributes_address_line').get(0);
 
-  if (base_address) {
-    var autocomplete = new google.maps.places.Autocomplete(base_address, { types: ['geocode'] });
+  if (listing_address_attributes_address_line) {
+    var autocomplete = new google.maps.places.Autocomplete(listing_address_attributes_address_line, { types: ['geocode'] });
     google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
-    google.maps.event.addDomListener(base_address, 'keydown', function(e) {
+    google.maps.event.addDomListener(listing_address_attributes_address_line, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
       }
@@ -16,11 +16,11 @@ function onPlaceChanged() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
 
-  $('#base_address').trigger('blur').val(components.address);
-  $('#base_zip_code').val(components.zip_code);
-  $('#base_city').val(components.city);
+  $('#listing_address_attributes_address_line').trigger('blur').val(components.address);
+  $('#listing_address_attributes_zip_code').val(components.zip_code);
+  $('#listing_address_attributes_city').val(components.city);
   if (components.country_code) {
-    $('#base_country').val(components.country_code);
+    $('#listing_address_attributes_country').val(components.country_code);
   }
 }
 
