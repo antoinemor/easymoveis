@@ -5,6 +5,11 @@ class ListingsController < ApplicationController
   def search
     @results = Listing.all
     authorize @results
+    @hash = Gmaps4rails.build_markers(@results) do |result, marker|
+      marker.lat result.address.latitude
+      marker.lng result.address.longitude
+      # marker.infowindow render_to_string(partial: "/results/map_box", locals: { result: result })
+    end
   end
 
   def index
@@ -18,22 +23,16 @@ class ListingsController < ApplicationController
   def new
     @listing = Listing.new
     @listing.furniture = Furniture.new
+    @listing.address = Address.new
 
     authorize @listing
-
   end
 
   def create
-    @listing = Listing.new(listing_params)
-    @listing.user = current_user
-    @furniture = Furniture.new(listing_params[:furniture_attributes])
-    @furniture.user = current_user
-    @listing.furniture = @furniture
-
+    @listing = Listing.create(listing_params)
+    @listing.user = @listing.furniture.user = current_user
     authorize @listing
-
     if @listing.save
-
       ambiance_params[:ambiance_ids].each do |ambiance_id|
         next if ambiance_id == ""
         @listing.ambiances << Ambiance.find(ambiance_id)
@@ -96,7 +95,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []]).permit!
+    params.require(:listing).permit(:base_price, :ambiance_id, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []], address_attributes: [:address_line, :city, :zip_code, :country, :latitude, :longitude]).permit!
   end
 
   def ambiance_params
