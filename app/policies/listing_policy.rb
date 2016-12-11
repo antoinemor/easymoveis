@@ -9,6 +9,10 @@ class ListingPolicy < ApplicationPolicy
     end
   end
 
+  def search?
+    true
+  end
+
   def show?
     true
   end
@@ -25,19 +29,19 @@ class ListingPolicy < ApplicationPolicy
     user_is_owner_or_admin?
   end
 
-  def approve_booking
+  def approve_booking?
     user_is_owner_or_admin?
   end
 
-  def reject_booking
+  def reject_booking?
     user_is_owner_or_admin?
   end
 
-  def rent_booking
+  def rent_booking?
     user_is_owner_or_admin?
   end
 
-  def finish_booking
+  def finish_booking?
     user_is_owner_or_admin?
   end
 

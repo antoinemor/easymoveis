@@ -1,0 +1,57 @@
+<div class="bg-white padded">
+  <h3 class="text-center">Last furniture added</h3>
+  <div class="discovery">
+    <% Listing.all.each do |listing| %>
+      <div class="ambiance-card">
+        <%= cl_image_tag listing.furniture.photos.first.path, width: 300, height: 200, crop: :fill, class: 'ambiance-image' %>
+        <div class="ambiance-card-title text-center"><%= listing.furniture.name.upcase %></div>
+        <div class="card-avatar">
+          <%= cl_image_tag avatar_image(listing.user), width: 100, height: 100, crop: :fill, gravity: :face, class: "avatar-bordered" %>
+        </div>
+        <%= link_to "", '', class: "ambiance-card-link"  %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('.discovery').slick({
+        dots: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+              infinite: true,
+              dots: true
+            }
+          },
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1
+            }
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+            }
+          }
+        ]
+        });
+      });
+  <% end %>
+<% end %>
+
+

@@ -1,11 +1,11 @@
 class BookingsController < ApplicationController
   before_action :find_booking, only: [:show, :edit, :update, :destroy, :cancel_booking]
   before_action :get_listing, only: [:show, :edit]
-  before_action :find_listing, only: [:new, :create, :update, :destroy]
+  before_action :find_listing, only: [:new, :create, :update]
   before_action :get_furniture, only: [:new]
 
   def index
-    @results = policy_scope(Booking)
+    @bookings = policy_scope(Booking)
   end
 
   def show
@@ -22,10 +22,11 @@ class BookingsController < ApplicationController
 
    def create
     @booking = @listing.bookings.new(booking_params)
-    @booking.workflow_step = "E"
+    @booking.workflow_step = "P"
     @booking.user = current_user
     authorize @booking
     if @booking.save
+      current_user.send_message(@listing.user, "Hey #{@listing.user.first_name}!\n I want to book #{@listing.furniture.name}! Please accept my demand as soon as possible! \n Cheers! \n #{current_user.first_name}", "You have a new booking!")
       redirect_to bookings_path, notice: 'Booking was successfully created.'
     else
       render :new
@@ -36,27 +37,18 @@ class BookingsController < ApplicationController
   end
 
   def update
-    @booking.workflow_step = "E"
+    @booking.workflow_step = "P"
     authorize @booking
     @booking.update(booking_params)
     redirect_to bookings_path, notice: 'Booking was successfully updated.'
   end
 
-  def cancel_booking
-    @booking.update_attributes(workflow_step: "C")
-    redirect_to bookings_path, notice: 'Booking was successfully cancelated.'
-  end
-
   def destroy
     @booking.destroy
-      redirect_to bookings_url, notice: 'Booking was successfully destroyed.'
+      redirect_to bookings_path, notice: 'Booking was successfully canceled.'
   end
 
   private
-
-  def list_booking_by_step(step)
-    @bookings = user.bookings.where(workflow_step: step)
-  end
 
   def find_listing
     @listing = Listing.find(params[:listing_id])

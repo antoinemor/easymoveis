@@ -25,5 +25,7 @@ class Listing < ApplicationRecord
     end
   end
 
-
+  def self.booked?
+    Booking.where(listing_id: self.id).exists?
+  end
 end
