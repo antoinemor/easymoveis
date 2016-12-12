@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :listings
   has_many :furnitures
   has_one :address
+  accepts_nested_attributes_for :address
   has_attachment :photo
   acts_as_messageable
 
