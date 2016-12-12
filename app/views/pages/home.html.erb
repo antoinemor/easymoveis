@@ -9,7 +9,7 @@
     $('#navbar').addClass('pre-scroll');
     $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo_white.png" %>");
 
-    var mainbottom = $('.banner').height() - $('#navbar').height();
+    var mainbottom = $('.banner').height();
     $(window).on('scroll',function(){
       var stop = $(window).scrollTop();
       if (stop > mainbottom) {
