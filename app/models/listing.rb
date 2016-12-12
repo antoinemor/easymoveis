@@ -1,4 +1,5 @@
 class Listing < ApplicationRecord
+  scope :available, ->(current_user) { where.not(user_id: current_user)  }
 
   PERIOD_OPTIONS = [3, 6, 9, 12, 18, 24]
 
@@ -21,7 +22,6 @@ class Listing < ApplicationRecord
   validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true
 
   validate :check_period_min_max
-
 
   def check_period_min_max
     if PERIOD_OPTIONS.index(period_min) > PERIOD_OPTIONS.index(period_max)

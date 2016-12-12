@@ -18,7 +18,12 @@
                 <% listing.bookings.first.nil? ? status = "A" : status = listing.bookings.first.workflow_step %>
                 <%= link_to "Show listing", listing_path(listing), class: "btn btn-default"  %>
                 <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
-                <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-default" if status == "P" %>
+                <%  if status == "P" %>
+                  <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-default" %>
+                  <%= link_to "Reject", reject_listing_path(listing), class: "btn btn-red", data: { confirm: "Are you sure?" }  %>
+                <% end %>
+                <%= link_to "Delivered", rent_listing_path(listing), class: "btn btn-default" if status == "A"%>
+                <%= link_to "Finish", finish_listing_path(listing), class: "btn btn-default" if status == "T"%>
             </div>
           </div>
         <% end %>
