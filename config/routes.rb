@@ -8,11 +8,12 @@ Rails.application.routes.draw do
   get '/booking/user_bookings', to: 'bookings#user_bookings', as: 'user_bookings'
   get '/bookings', to: 'bookings#index', as: 'bookings'
 
-
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
   get '/search', to: 'listings#search', as: 'search'
 
+  # Furniture by ambiance
+  get '/ambiances/:ambiance_id', to: 'ambiances#index', as: 'ambiances'
 
   # App routes
   resources :listings do
