@@ -25,6 +25,32 @@ function onPlaceChanged() {
 }
 
 $(document).ready(function() {
+  var listing_address_attributes_address_line = $('#address_address_line').get(0);
+
+  if (address_address_line) {
+    var autocomplete = new google.maps.places.Autocomplete(address_address_line, { types: ['geocode'] });
+    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChangedAddress);
+    google.maps.event.addDomListener(address_address_line, 'keydown', function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault(); // Do not submit the form on Enter.
+      }
+    });
+  }
+});
+
+function onPlaceChangedAddress() {
+  var place = this.getPlace();
+  var components = getAddressComponents(place);
+
+  $('#address_address_line').trigger('blur').val(components.address);
+  $('#address_zip_code').val(components.zip_code);
+  $('#address_city').val(components.city);
+  if (components.country_code) {
+    $('#address_country').val(components.country_code);
+  }
+}
+
+$(document).ready(function() {
   var user_address_attributes_address_line = $('#user_address_attributes_address_line').get(0);
 
   if (user_address_attributes_address_line) {
