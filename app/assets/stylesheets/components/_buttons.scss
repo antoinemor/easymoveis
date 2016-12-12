@@ -26,8 +26,14 @@
   width: 40px;
   height: 40px;
   font-weight: bold;
-  &:active {
+  &:target {
     background-color: $brand-color;
     color: white;
   }
 }
+
+.target {
+  background-color: $brand-color;
+  color: white;
+}
+
