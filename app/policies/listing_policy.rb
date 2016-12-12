@@ -17,6 +17,10 @@ class ListingPolicy < ApplicationPolicy
     true
   end
 
+  def index_by_ambiances?
+    true
+  end
+
   def create?
     true
   end

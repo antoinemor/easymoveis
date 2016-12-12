@@ -2,3 +2,23 @@
 <%= render "discovery" %>
 <%= render "last_added" %>
 <%= render "features" %>
+
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $('#navbar').addClass('pre-scroll');
+    $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo_white.png" %>");
+
+    var mainbottom = $('.banner').height();
+    $(window).on('scroll',function(){
+      var stop = $(window).scrollTop();
+      if (stop > mainbottom) {
+        $('#navbar').removeClass('pre-scroll');
+        $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo.png" %>");
+    } else {
+        $('#navbar').addClass('pre-scroll');
+        $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo_white.png" %>");
+      }
+    });
+  <% end %>
+<% end %>

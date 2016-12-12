@@ -4,7 +4,7 @@
     <% Ambiance.all.each do |ambiance| %>
       <div class="ambiance-card"><%= image_tag ambiance.photo, class: 'ambiance-image' %>
         <div class="ambiance-card-title text-center"><%= ambiance.name.upcase %></div>
-        <%= link_to "", '', class: "ambiance-card-link"  %>
+        <%= link_to '', ambiances_path(ambiance), class: "ambiance-card-link"  %>
       </div>
     <% end %>
   </div>
