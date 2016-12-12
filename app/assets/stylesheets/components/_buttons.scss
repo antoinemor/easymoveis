@@ -27,13 +27,13 @@
   height: 40px;
   font-weight: bold;
   &:target {
-    background-color: red;
+    background-color: $brand-color;
     color: white;
   }
 }
 
 .target {
-  background-color: red;
+  background-color: $brand-color;
   color: white;
 }
 
