@@ -81,7 +81,7 @@ class ListingsController < ApplicationController
   def rent_booking
     @listing.bookings[0].workflow_step = "T"
     @listing.bookings[0].save
-    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was delivered!", "Booking delivered")
+    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your furniture: #{@listing.furniture.name} was delivered!", "Booking delivered")
     redirect_to listings_path, notice: 'The furniture was delivered to the client.'
   end
 

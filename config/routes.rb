@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   end
 
   resources :messages, only: [:new, :create]
+#          get '/reject_booking', to: 'messages#reject_booking', as: 'message_reject_booking'
+
 
   # App pages routes
   get '/about',   to: 'pages#about',   as: 'about'

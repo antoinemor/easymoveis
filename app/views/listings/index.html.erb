@@ -9,13 +9,12 @@
               <%= cl_image_tag listing.furniture.photos.first.path, width: 250, height: 150, crop: :fill %>
             </div>
             <div class="listing-content text-center">
+              <% listing.bookings.first.nil? ? status = "V" : status = listing.bookings.first.workflow_step %>
               <strong><%= listing.furniture.name %> </strong> <br>
               Category: <%= listing.furniture.category %><br>
-              Status:
-              <%= listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(listing.bookings.first.workflow_step) %><br>
+              Status: <%= Booking.text_wkf_step(status) %><br>
             </div>
             <div class="listing-actions text-center">
-                <% listing.bookings.first.nil? ? status = "A" : status = listing.bookings.first.workflow_step %>
                 <%= link_to "Show listing", listing_path(listing), class: "btn btn-default"  %>
                 <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
                 <%  if status == "P" %>
