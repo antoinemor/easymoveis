@@ -55,7 +55,7 @@ $(document).ready(function() {
 
   if (city) {
     var autocomplete = new google.maps.places.Autocomplete(city, { types: ['geocode'] });
-    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChangedCity);
     google.maps.event.addDomListener(city, 'keydown', function(e) {
       if (e.keyCode == 13) {
         e.preventDefault(); // Do not submit the form on Enter.
@@ -64,7 +64,7 @@ $(document).ready(function() {
   }
 });
 
-function onPlaceChanged() {
+function onPlaceChangedCity() {
   var place = this.getPlace();
   var components = getAddressComponents(place);
 
