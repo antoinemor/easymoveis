@@ -42,7 +42,6 @@ class ListingsController < ApplicationController
         next if ambiance_id == ""
         @listing.ambiances << Ambiance.find(ambiance_id)
       end
-
       redirect_to listing_path(@listing)
     else
       render "new"
@@ -60,10 +59,9 @@ class ListingsController < ApplicationController
         next if ambiance_id == ""
         @listing.ambiances << Ambiance.find(ambiance_id)
       end
-
       redirect_to listing_path(@listing)
     else
-      render "new"
+      render "edit"
     end
   end
 
