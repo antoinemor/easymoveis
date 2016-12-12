@@ -66,26 +66,26 @@ class ListingsController < ApplicationController
   end
 
   def approve_booking
-    @listing.bookings.first.workflow_step = "A"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "A"
+    @listing.bookings[0].save
     redirect_to listings_path, notice: 'Booking approved.'
   end
 
   def reject_booking
-    @listing.bookings.first.workflow_step = "R"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "R"
+    @listing.bookings[0].save
     redirect_to listings_path, notice: 'Booking Rejected.'
   end
 
   def rent_booking
-    @listing.bookings.first.workflow_step = "T"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "T"
+    @listing.bookings[0].save
     redirect_to listings_path, notice: 'The furniture was delivered to the client.'
   end
 
   def finish_booking
-    @listing.bookings.first.workflow_step = "F"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "F"
+    @listing.bookings[0].save
     redirect_to listings_path, notice: 'The rental operation is finished.'
   end
 
