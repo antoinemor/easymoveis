@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
-  get '/search', to: 'listings#search', as: 'search'
+  get '/search', to: 'search#index', as: 'search'
 
   # Furniture by ambiance
   get '/ambiances/:ambiance_id', to: 'ambiances#index', as: 'ambiances'

@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
       <div class="box-white">
-        <% word = @results.length >= 2 ? 's' : '' %>
-        <h4 class="text-center" style="margin: 0"><%= @results.length %> result<%= word %> of furniture</h4>
+        <% word = @listings.length >= 2 ? 's' : '' %>
+        <h4 class="text-center" style="margin: 0"><%= @listings.length %> result<%= word %> of furniture</h4>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
       <div class="search-results">
         <div class="card-container">
           <div class="row">
-            <% @results.each do |listing| %>
+            <% @listings.each do |listing| %>
               <div class="col-xs-12 col-sm-6">
                 <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)),
          url('<%= cl_image_path listing.furniture.photos.first.path %>')">
