@@ -8,6 +8,23 @@
   padding: 0px 30px;
   align-items: center;
   justify-content: space-between;
+  z-index: 1;
+}
+
+.pre-scroll {
+  background: rgba(0,0,0,0);
+  box-shadow: 0 0 0;
+  .navbar-wagon-link {
+    color: white;
+    font-size: 14px;
+  }
+  .navbar-wagon-link:hover {
+    color: $brand-color;
+    text-decoration: none;
+  }
+  .badge-container i {
+    color: white;
+  }
 }
 
 /* Optional class to fix the navbar on top */
