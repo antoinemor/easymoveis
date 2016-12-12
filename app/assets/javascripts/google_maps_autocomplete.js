@@ -50,6 +50,27 @@ function onPlaceChangedUser() {
   }
 }
 
+$(document).ready(function() {
+  var city = $('#city').get(0);
+
+  if (city) {
+    var autocomplete = new google.maps.places.Autocomplete(city, { types: ['geocode'] });
+    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+    google.maps.event.addDomListener(city, 'keydown', function(e) {
+      if (e.keyCode == 13) {
+        e.preventDefault(); // Do not submit the form on Enter.
+      }
+    });
+  }
+});
+
+function onPlaceChanged() {
+  var place = this.getPlace();
+  var components = getAddressComponents(place);
+
+  $('#city').val(components.city);
+}
+
 function getAddressComponents(place) {
   // If you want lat/lng, you can look at:
   // - place.geometry.location.lat()
