@@ -6,6 +6,8 @@
 //= require cloudinary/jquery.cloudinary
 //= require attachinary
 //= require jquery.slick
+//= require underscore
+//= require gmaps/google
 //= require moment
 //= require bootstrap-datetimepicker
 //= require pickers

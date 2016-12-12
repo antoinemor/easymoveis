@@ -6,10 +6,16 @@
     <%= furniture_form.input :photos, as: :attachinary %>
   <% end %>
   <%= f.input :base_price %>
+  <%= f.input :deposit %>
   <%= f.input :period_min, collection: Listing::PERIOD_OPTIONS %>
   <%= f.input :period_max, collection: Listing::PERIOD_OPTIONS  %>
   <%= f.association :ambiances, as: :check_boxes %>
-
-  <%= f.button :submit, class: "btn btn-block"  %>
+  <%= f.simple_fields_for :address, @listing.address do |address_form| %>
+    <%= address_form.input :address_line %>
+    <%= address_form.input :zip_code %>
+    <%= address_form.input :city %>
+    <%= address_form.input :country %>
+  <% end %>
+  <%= f.button :submit, class: "btn btn-block btn-primary"  %>
 <% end %>
 

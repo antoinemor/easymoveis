@@ -1,70 +1,111 @@
 <div class="padded">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-2 ">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1">
       <div class="box-white">
-        <h2 style="margin-top: 5px;"><%= @listing.furniture.name %> </h2>
-
-        <Strong>Description: </Strong><%= @listing.furniture.description %> <br>
-        <Strong>Category: </Strong><%= @listing.furniture.category %>  <br>
-        <Strong>Ambiance: </Strong><% @listing.ambiances.each do |ambiance| %>
-          <%=ambiance.name%>,
-        <%end%>
-        <div style= "padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
-          <div class="slider-for">
+        <h2 class="text-center"><%= @listing.furniture.name %> </h2>
+        <!-- Main product image -->
+        <div style="padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
+          <div class="slider-for" style="max-height: 400px">
             <% @listing.furniture.photos.each do |photo| %>
               <%= cl_image_tag photo.path, width: 1024, height:768, crop: :fill%>
             <% end %>
           </div>
-
-          <div class="slider-nav">
+          <!-- Product image slider -->
+          <div class="slider-nav" style="margin-bottom: 0px;">
             <% @listing.furniture.photos.each do |photo| %>
               <%= cl_image_tag photo.path, width: 300, height:200, crop: :fill %>
             <% end %>
           </div>
-          <br>
+        </div>
+      </div>
+      <br>
+      <!-- Product description -->
+      <div class="box-white text-center">
+        <strong>Description</strong> <br>
+        <%= @listing.furniture.description %> <br> <br>
+      </div>
+      <br>
+      <div class="box-white text-center">
+        <strong>Ambiances</strong> <br>
+        <% @listing.ambiances.each do |ambiance| %>
+          <div class="btn btn-default">  <%=ambiance.name%></div>
+        <%end%>
+      </div>
+      <br>
+      <!-- Product in similar ambiance -->
+      <div class="box-white">
+        <strong><p class="text-center"> See also in the same ambiances </p></strong>
+        <div class="autoplay" style= "padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
+        <% find_similar(@listing).each do |l| %>
+          <%= cl_image_tag l.furniture.photos.first.path, width: 300, height:200, crop: :fill %>
+        <% end %>
         </div>
       </div>
     </div>
 
-    <div class="col-xs-12 col-sm-6 col-md-3 text-center" >
-      <div class="box-white" style= "padding:  30px 20px 5px 20px;">
-        <strong>Listing information:</strong>
-        <br>
-        <p style="margin-top: 5px;"> Base price: R$ <Strong style="color: red"><%= @listing.base_price %></Strong> / per month </p>
-        <p style="margin-top: 5px;"> Rental duration: from <Strong style="color: red"> <%=@listing.period_min%></Strong> to <Strong style="color: red"><%= @listing.period_max%></Strong></p>
+    <div class="col-xs-12 col-sm-4 text-center" >
+      <div class="box-white">
+        <p class="text-center">BASE PRICE</p>
+        <div class="product-main-info product-base-price"><%= @listing.base_price.round %>$</div>  <small>per month</small>
+        <div class="product-info-separation"></div>
+        <p class="text-center">RENTAL DURATION</p>
+        <% Listing::PERIOD_OPTIONS.each do |duration|
+          next if duration < @listing.period_min || duration > @listing.period_max%>
+          <button class="btn-round-bordered text-center btn-duration"><%= duration %>m</button>
+        <% end %>
+        <div class="product-info-separation"></div>
+        <p class="text-center">ACTUAL PRICE</p>
+        <div class="product-main-info"><%= @listing.base_price.round %>$</div>  <small>per month</small>
+        <div class="product-info-separation"></div>
+        <p class="text-center">DEPOSIT</p>
+        <div class="product-main-info"><%= @listing.deposit %>$</div>  <small>refundable</small>
+        <div class="product-info-separation"></div>
+        <p class="text-center">RENTAL DURATION</p>
+        <small>from</small><div class="product-main-info"><%= @listing.period_min %></div> <small> to </small><div class="product-main-info"><%= @listing.period_max %></div>
+        <div class="product-info-separation"></div>
+        <p class="text-center">STATUS</p>
 
         <% booking = Booking.where(listing_id: @listing.id) %>
-        <p style="margin-top: 5px;"> Status: <Strong style="color: red">
+        <div class="product-main-info" style="font-size: 18px">
         <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
-
+        </div>
+        <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-primary' %>
+        <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
       </div>
-    </div>
 
-    <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id)  %>
     <% if booking.nil? %>
       <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
       <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
     <% end %>
-  </div>
-</div>
+      <div id="map" style="height: 300px">
 
-<div class="padded">
-  <div class="row" style="border: 1px solid grey">
-    <p style="margin: 10px 0px 0px 40px"> See also in the same ambiances </p>
-    <div class="autoplay" style= "margin:  20px 0px 20px 0px;">
-      <%@listing.ambiances.each do |ambiance| %>
-        <%results= Listing.all.select{|l| l.ambiances.include?(ambiance)}%>
-        <%results.each do |result|%>
-          <% next if result == @listing%>
-          <% next unless result.furniture.photos.first.present? %>
-            <%= cl_image_tag result.furniture.photos.first.path, width: 300, height:200, crop: :fill %>
-        <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
 
 <% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      var handler = Gmaps.build('Google');
+      handler.buildMap({ internal: { id: 'map' } }, function() {
+        markers = handler.addMarkers(<%= raw @hash.to_json %>);
+        handler.bounds.extendWith(markers);
+        handler.fitMapToBounds();
+        if (markers.length == 0) {
+          handler.getMap().setZoom(2);
+        } else if (markers.length == 1) {
+          handler.getMap().setZoom(14);
+        }
+      });
+    });
+  <% end %>
+  <%= javascript_tag do %>
+    $('.btn-duration').click(function(e) {
+      $('.btn-duration.active').removeClass('active');
+      $(this).addClass('active');
+    });
+  <% end %>
   <%= javascript_tag do %>
     $(document).ready(function(){
       $('.slider-for').slick({
@@ -83,7 +124,7 @@
         focusOnSelect: true
       });
       $('.autoplay').slick({
-      slidesToShow: 10,
+      slidesToShow: 3,
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
