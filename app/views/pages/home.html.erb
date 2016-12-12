@@ -9,13 +9,13 @@
     $('#navbar').addClass('pre-scroll');
     $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo_white.png" %>");
 
-    var mainbottom = $('.banner').height();
+    var mainbottom = $('.banner').height() - $('#navbar').height();
     $(window).on('scroll',function(){
       var stop = $(window).scrollTop();
       if (stop > mainbottom) {
         $('#navbar').removeClass('pre-scroll');
         $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo.png" %>");
-    } else {
+      } else {
         $('#navbar').addClass('pre-scroll');
         $('#navbar .navbar-wagon-brand img').attr("src","<%=escape_javascript image_path "logo_white.png" %>");
       }
