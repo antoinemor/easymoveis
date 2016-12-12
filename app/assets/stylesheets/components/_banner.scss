@@ -25,12 +25,28 @@
   }
 }
 
-.search-form {
+.banner-search-form {
   display: inline-block;
-  padding: 10px;
-  height: 64px;
-  border-radius: 32px;
-  background-color: rgba(255, 255, 255, 0.4)
+  .form-control {
+    float: left;
+  }
+  #furniture_type {
+    border-right: 0;
+    border-radius: 10px 0 0 10px;
+  }
+  input {
+    border-radius: 0;
+    margin: 0;
+    height: 60px;
+    font-size: 18px;
+  }
+  button {
+    margin: 0;
+    height: 60px;
+    font-size: 18px;
+    float: right;
+    border-radius: 0 10px 10px 0;
+  }
 }
 
 .banner-content {
