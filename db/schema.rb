@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161211204649) do
+ActiveRecord::Schema.define(version: 20161211234036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,8 +90,9 @@ ActiveRecord::Schema.define(version: 20161211204649) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string   "period_min"
-    t.string   "period_max"
+    t.integer  "period_min"
+    t.integer  "period_max"
+    t.integer  "deposit"
     t.index ["user_id"], name: "index_listings_on_user_id", using: :btree
   end
 

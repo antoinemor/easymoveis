@@ -18,6 +18,11 @@ class ListingsController < ApplicationController
 
   def show
     @results = policy_scope(Listing)
+    @hash = Gmaps4rails.build_markers(@listing) do |result, marker|
+      marker.lat result.address.latitude
+      marker.lng result.address.longitude
+      # marker.infowindow render_to_string(partial: "/results/map_box", locals: { result: result })
+    end
   end
 
   def new
@@ -49,7 +54,6 @@ class ListingsController < ApplicationController
 
   def update
     @listing.update(listing_params)
-    @listing.furniture.update(listing_params[:furniture_attributes])
     if @listing.save
       @listing.ambiances.destroy_all
       ambiance_params[:ambiance_ids].each do |ambiance_id|
@@ -95,7 +99,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:base_price, :ambiance_id, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []], address_attributes: [:address_line, :city, :zip_code, :country, :latitude, :longitude]).permit!
+    params.require(:listing).permit(:base_price, :deposit, :ambiance_id, :period_min, :period_max, furniture_attributes: [:name, :description, :category, :listing_id, :user_id, photos: []], address_attributes: [:address_line, :city, :zip_code, :country, :latitude, :longitude]).permit!
   end
 
   def ambiance_params

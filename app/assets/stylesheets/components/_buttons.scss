@@ -13,3 +13,21 @@
 .btn-margin {
   margin: 3px 0;
 }
+
+.btn-round-bordered {
+  margin: 5px;
+  display: inline-block;
+  color: $brand-color;
+  background-color: white;
+  border: solid 2px $brand-color;
+  border-radius: 50%;
+  font-size: 12px;
+  padding: 10px 0;
+  width: 40px;
+  height: 40px;
+  font-weight: bold;
+  &:active {
+    background-color: $brand-color;
+    color: white;
+  }
+}

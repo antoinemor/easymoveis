@@ -1,6 +1,6 @@
 class Listing < ApplicationRecord
 
-  PERIOD_OPTIONS = %w(3m 6m 9m 12m 18m +24m)
+  PERIOD_OPTIONS = [3, 6, 9, 12, 18, 24]
 
   belongs_to :user
   has_many :bookings
@@ -15,6 +15,7 @@ class Listing < ApplicationRecord
   validates :base_price, presence: true
   validates :period_min, presence: true
   validates :period_max, presence: true
+  validates :deposit, presence: true
 
   validates_inclusion_of :period_min, :in => PERIOD_OPTIONS, :allow_nil => true
   validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true

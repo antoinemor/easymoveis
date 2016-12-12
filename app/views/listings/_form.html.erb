@@ -6,6 +6,7 @@
     <%= furniture_form.input :photos, as: :attachinary %>
   <% end %>
   <%= f.input :base_price %>
+  <%= f.input :deposit %>
   <%= f.input :period_min, collection: Listing::PERIOD_OPTIONS %>
   <%= f.input :period_max, collection: Listing::PERIOD_OPTIONS  %>
   <%= f.association :ambiances, as: :check_boxes %>
