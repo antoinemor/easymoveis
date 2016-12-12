@@ -49,19 +49,23 @@
         <div class="product-main-info product-base-price"><%= @listing.base_price.round %>$</div>  <small>per month</small>
         <div class="product-info-separation"></div>
         <p class="text-center">RENTAL DURATION</p>
-        <% Listing::PERIOD_OPTIONS.each do |duration|
-          next if duration < @listing.period_min || duration > @listing.period_max%>
-          <button class="btn-round-bordered text-center btn-duration"><%= duration %>m</button>
-        <% end %>
+
+        <div class="btn-group">
+          <% Listing::PERIOD_OPTIONS.each do |duration|
+            next if duration < @listing.period_min || duration > @listing.period_max%>
+            <button class="btn-round-bordered text-center btn-duration" id="<%= duration %>"><%= duration %>m</button>
+          <% end %>
+        </div>
+
         <div class="product-info-separation"></div>
         <p class="text-center">ACTUAL PRICE</p>
-        <div class="product-main-info"><%= @listing.base_price.round %>$</div>  <small>per month</small>
+        <div class="product-main-info" id="actual_price">0$</div>  <small>per month</small>
         <div class="product-info-separation"></div>
         <p class="text-center">DEPOSIT</p>
         <div class="product-main-info"><%= @listing.deposit %>$</div>  <small>refundable</small>
         <div class="product-info-separation"></div>
         <p class="text-center">RENTAL DURATION</p>
-        <small>from</small><div class="product-main-info"><%= @listing.period_min %></div> <small> to </small><div class="product-main-info"><%= @listing.period_max %></div>
+        <small>from</small><div class="product-main-info"><%= @listing.period_min %></div> <small> to </small><div class="product-main-info"><%= @listing.period_max %></div><small> m</small>
         <div class="product-info-separation"></div>
         <p class="text-center">STATUS</p>
 
@@ -84,6 +88,10 @@
   </div>
 </div>
 
+
+
+
+
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
     $(document).ready(function() {
@@ -100,12 +108,26 @@
       });
     });
   <% end %>
+
   <%= javascript_tag do %>
     $('.btn-duration').click(function(e) {
-      $('.btn-duration.active').removeClass('active');
-      $(this).addClass('active');
+      $('.btn-duration.target').removeClass('target');
+      $(this).addClass('target');
+      selected_period= '';
+      selected_period=$(this).attr('id');
+      base_price = parseInt(<%= @listing.base_price.round %>);
+      <!--$('#actual_price').html(base_price * price_factor + '$');-->
+      if (selected_period == 3) {$('#actual_price').html(base_price + '$');}
+      if (selected_period == 6) {$('#actual_price').html(base_price * 0.95 + '$');}
+      if (selected_period == 9) {$('#actual_price').html(base_price * 0.9 + '$');}
+      if (selected_period == 12) {$('#actual_price').html(base_price * 0.85 + '$');}
+      if (selected_period == 18) {$('#actual_price').html(base_price * 0.80 + '$');}
+      if (selected_period == 24) {$('#actual_price').html(base_price * 0.75 + '$');}
     });
   <% end %>
+
+
+
   <%= javascript_tag do %>
     $(document).ready(function(){
       $('.slider-for').slick({
@@ -132,3 +154,7 @@
     });
   <% end %>
 <% end %>
+
+
+
+
