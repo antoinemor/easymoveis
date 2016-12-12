@@ -7,8 +7,16 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :listings
   has_many :furnitures
+  has_one :address, dependent: :destroy
+  accepts_nested_attributes_for :address
   has_attachment :photo
   acts_as_messageable
+
+  # validates :description, presence: :true
+  # validates :first_name, presence: :true
+  # validates :last_name, presence: :true
+  # validates :date_of_birth, presence: :true
+  # validates :address, presence: :true
 
   def self.find_for_facebook_oauth(auth)
     user_params = auth.to_h.slice(:provider, :uid)
@@ -33,5 +41,4 @@ class User < ApplicationRecord
   def name
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
-
 end
