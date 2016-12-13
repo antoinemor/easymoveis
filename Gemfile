@@ -29,6 +29,7 @@ gem 'mailboxer'
 gem 'geocoder'
 gem "coffee-rails"
 gem "gmaps4rails"
+gem 'pg_search'
 
 source 'https://rails-assets.org' do
   gem "rails-assets-underscore"

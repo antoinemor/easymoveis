@@ -17,7 +17,8 @@ class Booking < ApplicationRecord
                       'C' => 'Canceled',
                       'A' => 'Approved',
                       'T' => 'Rented',
-                      'F' => 'Finished'}
+                      'F' => 'Finished',
+                      'V' => 'Available'}
 
   # Search for the booking and recovers it's status
   def self.text_wkf_step(step)

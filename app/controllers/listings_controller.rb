@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show, :search]
 
   def search
-    @results = Listing.all
+    @results = Listing.available(current_user)
     authorize @results
     @hash = Gmaps4rails.build_markers(@results) do |result, marker|
       marker.lat result.address.latitude
@@ -66,26 +66,29 @@ class ListingsController < ApplicationController
   end
 
   def approve_booking
-    @listing.bookings.first.workflow_step = "A"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "A"
+    @listing.bookings[0].save
+    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was approved!", "Booking approved")
     redirect_to listings_path, notice: 'Booking approved.'
   end
-
   def reject_booking
-    @listing.bookings.first.workflow_step = "R"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "R"
+    @listing.bookings[0].save
+    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was rejected!", "Booking rejected")
     redirect_to listings_path, notice: 'Booking Rejected.'
   end
 
   def rent_booking
-    @listing.bookings.first.workflow_step = "T"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "T"
+    @listing.bookings[0].save
+    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your furniture: #{@listing.furniture.name} was delivered!", "Booking delivered")
     redirect_to listings_path, notice: 'The furniture was delivered to the client.'
   end
 
   def finish_booking
-    @listing.bookings.first.workflow_step = "F"
-    @listing.bookings.first.save
+    @listing.bookings[0].workflow_step = "F"
+    @listing.bookings[0].save
+    current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was finished!", "Booking Finished")
     redirect_to listings_path, notice: 'The rental operation is finished.'
   end
 

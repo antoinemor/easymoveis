@@ -1,4 +1,5 @@
 class Listing < ApplicationRecord
+  scope :available, ->(current_user) { where.not(user_id: current_user)  }
 
   PERIOD_OPTIONS = [3, 6, 9, 12, 18, 24]
 
@@ -22,6 +23,12 @@ class Listing < ApplicationRecord
 
   validate :check_period_min_max
 
+  include PgSearch
+  pg_search_scope :global_search,
+    associated_against: {
+      furniture: [ :category ],
+      address: [ :city ]
+    }
 
   def check_period_min_max
     if PERIOD_OPTIONS.index(period_min) > PERIOD_OPTIONS.index(period_max)
