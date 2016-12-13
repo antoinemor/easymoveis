@@ -17,6 +17,12 @@
             <%= f.input :description, label: "Bio", required: true %>
             <%= f.input :photo, as: :attachinary %>
           </div>
+          <%= f.simple_fields_for :address, resource.address do |address_form| %>
+            <%= address_form.input :address_line %>
+            <%= address_form.input :zip_code %>
+            <%= address_form.input :city %>
+            <%= address_form.input :country %>
+          <% end %>
 
           <div class="form-actions">
             <%= f.button :submit, "Sign up", class: "btn btn-block btn-red btn-margin" %>
@@ -28,3 +34,4 @@
     </div>
   </div>
 </div>
+

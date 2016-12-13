@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
-  get '/search', to: 'listings#search', as: 'search'
+  get '/search', to: 'search#index', as: 'search'
 
   # Furniture by ambiance
   get '/ambiances/:ambiance_id', to: 'ambiances#index', as: 'ambiances'
@@ -52,8 +52,10 @@ Rails.application.routes.draw do
   get '/team',    to: 'pages#team',    as: 'team'
 
   # Devise routes
-  devise_for :users,
-    controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
+
+  # Addresses routes for facebook users
+  resources :addresses, only: [:new, :create]
 
   # Attachinary
   mount Attachinary::Engine => "/attachinary"

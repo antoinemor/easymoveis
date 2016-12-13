@@ -16,14 +16,22 @@
 
             <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
             <%= f.input :password_confirmation, required: false %>
-            <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
+            <%#= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
             <%= f.input :first_name, required: true %>
             <%= f.input :last_name, required: true %>
             <%= f.input :date_of_birth, required: true, as: :date_picker, placeholder: 'mm/dd/yyyy'  %>
             <%= f.input :description, label: "Bio", required: true %>
             <%= f.input :photo, as: :attachinary %>
+            <% unless current_user.address %>
+              <%= link_to "New address", new_address_path, class: "btn btn-block btn-default" %> <br>
+            <% end %>
           </div>
-
+          <%= f.simple_fields_for :address, @user.address do |address_form| %>
+            <%= address_form.input :address_line %>
+            <%= address_form.input :zip_code %>
+            <%= address_form.input :city %>
+            <%= address_form.input :country %>
+          <% end %>
           <div class="form-actions">
             <%= f.button :submit, "Update", class: "btn btn-block btn-red" %>
           </div>

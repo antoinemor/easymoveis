@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
   has_one :listing
+  has_one :user
 
   validates :address_line, presence: true
   validates :city, presence: true
