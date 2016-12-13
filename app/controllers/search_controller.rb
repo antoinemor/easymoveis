@@ -4,7 +4,12 @@ class SearchController < ApplicationController
     @hash = Gmaps4rails.build_markers(@listings) do |result, marker|
       marker.lat result.address.latitude
       marker.lng result.address.longitude
-      # marker.infowindow render_to_string(partial: "/results/map_box", locals: { result: result })
+      marker.picture({
+                  :url => view_context.cl_image_path("uu6v7azx9zx50he4wfl2", width: 42, height: 42, crop: :fill),
+                  :width   => 42,
+                  :height  => 42
+                 })
+      marker.infowindow render_to_string(partial: "/search/map_box", locals: { result: result })
     end
   end
 end
