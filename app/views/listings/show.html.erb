@@ -76,7 +76,7 @@
         <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
         </div>
         <% if current_user != Listing.find(params[:id]).user %>
-          <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-default' %>
+          <%= link_to 'Ask a question', new_to_path(@listing.user), class: 'btn btn-block btn-default' %>
           <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
         <% end %>
         <% if booking.nil? %>
