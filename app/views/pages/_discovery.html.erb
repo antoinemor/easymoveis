@@ -2,7 +2,7 @@
   <h3 class="text-center">Discover</h3>
   <div class="discovery">
     <% Ambiance.all.each do |ambiance| %>
-      <div class="ambiance-card"><%= image_tag ambiance.photo, class: 'ambiance-image' %>
+      <div class="ambiance-card"><%= image_tag(ambiance.photo, class: 'ambiance-image') unless ambiance.photo.nil? %>
         <div class="ambiance-card-title text-center"><%= ambiance.name.upcase %></div>
         <%= link_to '', ambiances_path(ambiance), class: "ambiance-card-link"  %>
       </div>
