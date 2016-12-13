@@ -37,7 +37,9 @@
         <strong><p class="text-center"> See also in the same ambiances </p></strong>
         <div class="autoplay" style= "padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
         <% find_similar(@listing).each do |l| %>
-          <%= cl_image_tag l.furniture.photos.first.path, width: 300, height:200, crop: :fill %>
+          <%= link_to listing_path(l) do %>
+            <%= cl_image_tag l.furniture.photos.first.path, width: 300, height:200, crop: :fill %>
+          <% end %>
         <% end %>
         </div>
       </div>
