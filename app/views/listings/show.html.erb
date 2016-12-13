@@ -73,8 +73,10 @@
         <div class="product-main-info" style="font-size: 18px">
         <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
         </div>
-        <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-primary' %>
-        <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
+        <% if current_user != Listing.find(params[:id]).user %>
+          <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-primary' %>
+          <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
+        <% end %>
       </div>
 
     <% if booking.nil? %>

@@ -19,8 +19,10 @@
             </div>
             <div class="listing-actions text-center">
               <%= link_to "Show booking", listing_booking_path(booking.listing_id,booking.id), class: "btn btn-default"  %>
-              <%= link_to "Edit", edit_listing_booking_path(booking.listing_id,booking.id), class: "btn btn-default"  %>
-              <%= link_to "Delete", booking_path(booking.id), method: :delete, class: "btn btn-red"  %>
+              <% if booking.workflow_step == "P" || booking.workflow_step == "R"%>
+                <%= link_to "Edit", edit_listing_booking_path(booking.listing_id,booking.id), class: "btn btn-default"  %>
+                <%= link_to "Delete", booking_path(booking.id), method: :delete, class: "btn btn-red", data: { confirm: 'Are you sure?' }   %>
+              <% end %>
             </div>
           </div>
         <% end %>

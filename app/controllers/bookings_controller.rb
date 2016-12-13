@@ -2,7 +2,7 @@ class BookingsController < ApplicationController
   before_action :find_booking, only: [:show, :edit, :update, :destroy, :cancel_booking]
   before_action :get_listing, only: [:show, :edit]
   before_action :find_listing, only: [:new, :create, :update]
-  before_action :get_furniture, only: [:new]
+  before_action :get_furniture, only: [:new, :edit]
 
   def index
     @bookings = policy_scope(Booking)
