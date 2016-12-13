@@ -15,7 +15,8 @@ class BookingsController < ApplicationController
     if current_user.bookings.where(listing_id: (params[:listing_id]) ).present?
       redirect_to listing_path(params[:listing_id]), alert: 'This listing is already booked.'
     end
-
+    @price = params[:booking][:price].to_i
+    @duration = params[:booking][:duration].to_i
     @booking = @listing.bookings.new
     authorize @booking
   end

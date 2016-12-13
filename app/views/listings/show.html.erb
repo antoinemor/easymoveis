@@ -76,7 +76,7 @@
         <div class="product-info-separation"></div>
 
         <p class="text-center">ACTUAL PRICE</p>
-        <div class="product-main-info" id="actual_price"><p style="font-size: 14px;">Select duration to see price</p></div>  <small>per month</small>
+        <div class="product-main-info" id="actual_price"><p style="font-size: 14px;">Select duration to see price</p></div><div class="product-main-info hidden" id="dollar-sign">$</div>  <small>per month</small><br><br>
 
 
 <!--         <p class="text-center">RENTAL DURATION</p>
@@ -84,8 +84,14 @@
         <div class="product-info-separation"></div> -->
 
         <% if current_user != Listing.find(params[:id]).user %>
-          <%= link_to 'Ask a question', new_to_path(@listing.user), class: 'btn btn-block btn-default' %>
-          <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
+          <%= link_to 'Ask a question', new_to_path(@listing.user), class: 'btn btn-block btn-default' %> <br>
+          <%= simple_form_for :booking, url: new_listing_booking_path(@listing.id) do |f| %>
+            <%= f.input :duration, as: :hidden %>
+            <%= f.input :price, as: :hidden %>
+            <%= f.button :submit, value: 'Book Furniture', class: "btn btn-block btn-primary" %>
+          <% end %>
+
+          <%#= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
         <% end %>
         <% if booking.nil? %>
           <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
@@ -122,18 +128,23 @@
   <!-- Duration/price choice -->
   <%= javascript_tag do %>
     $('.btn-duration').click(function(e) {
+      $('#dollar-sign').removeClass('hidden');
       $('.btn-duration.target').removeClass('target');
       $(this).addClass('target');
       selectedPeriod= '';
       selectedPeriod=$(this).attr('id');
+      $('#booking_duration').val(selectedPeriod);
       basePrice = parseInt(<%= @listing.base_price.round %>);
-      <!--$('#actual_price').html(base_price * price_factor + '$');-->
-      if (selectedPeriod == 3) {$('#actual_price').html(basePrice + '$');}
-      if (selectedPeriod == 6) {$('#actual_price').html(basePrice * 0.95 + '$');}
-      if (selectedPeriod == 9) {$('#actual_price').html(basePrice * 0.9 + '$');}
-      if (selectedPeriod == 12) {$('#actual_price').html(basePrice * 0.85 + '$');}
-      if (selectedPeriod == 18) {$('#actual_price').html(basePrice * 0.80 + '$');}
-      if (selectedPeriod == 24) {$('#actual_price').html(basePrice * 0.75 + '$');}
+      var newPrice;
+
+      if (selectedPeriod == 3) {newPrice = basePrice;}
+      if (selectedPeriod == 6) {newPrice = basePrice * 0.95;}
+      if (selectedPeriod == 9) {newPrice = basePrice * 0.9;}
+      if (selectedPeriod == 12) {newPrice = basePrice * 0.85;}
+      if (selectedPeriod == 18) {newPrice = basePrice * 0.80;}
+      if (selectedPeriod == 24) {newPrice = basePrice * 0.75;}
+      $('#actual_price').html(newPrice);
+      $('#booking_price').val(newPrice);
     });
   <% end %>
 

@@ -24,10 +24,10 @@ Rails.application.routes.draw do
         get '/finish', to: 'listings#finish_booking', as: 'finish'
       end
 
-    resources :bookings, except: [:destroy]
+    resources :bookings, except: [:destroy, :new]
     resources :furnitures
   end
-
+  post '/listings/:listing_id/bookings/new', to: 'bookings#new', as: 'new_listing_booking'
   resources :bookings, only: [:destroy]
 
   # Messaging routes

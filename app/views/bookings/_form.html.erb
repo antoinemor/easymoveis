@@ -1,15 +1,14 @@
 <%= simple_form_for [@listing, @booking] do |f| %>
-<br>
-<p><strong>Name: </strong><%= @booking.listing.furniture.name %></p>
-<br>
-<p><strong>Description: </strong><%= @booking.listing.furniture.description %></p>
-<br>
-<p><strong>Base Price: </strong><%= @booking.listing.base_price %></p>
-<br>
-
   <%= f.error_notification %>
-  <%= f.input :start_date, as: :date_picker, placeholder: 'mm/dd/yyyy'  %>
-  <%= f.input :end_date, as: :date_picker, placeholder: 'mm/dd/yyyy'  %>
+  <p class="text-center">START DATE</p>
+  <%= f.input :start_date, as: :date_picker, label: false, placeholder: 'dd/mm/yyyy'  %>
+  <%= f.input :end_date, as: :date_picker, as: :hidden, placeholder: 'dd/mm/yyyy'  %>
+  <div id="end-date-div" class="hidden">
+    <div class="product-info-separation"></div>
+    <p class="text-center">END DATE</p>
+    <div class="text-center"><div class="product-main-info" id="end_date"></div></div>
+  </div>
+  <br>
   <%= f.button :submit, class: "btn btn-block btn-primary" %>
 <% end %>
 
