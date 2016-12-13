@@ -10,4 +10,8 @@ class MessagesController < ApplicationController
     flash[:success] = "Message has been sent!"
     redirect_to conversation_path(conversation)
   end
+
+  def new_to
+    @user = User.find(params[:user_id])
+  end
 end
