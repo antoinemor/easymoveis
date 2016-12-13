@@ -52,6 +52,7 @@
         <div class="product-main-info" style="font-size: 18px">
         <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
         </div>
+        <div class="product-info-separation"></div>
 
         <p class="text-center">LOCATION</p>
         <div class="product-main-info" id="location" style="font-size: 20px"><%= @listing.address.city + ', ' + @listing.address.country %></div>
@@ -76,7 +77,7 @@
 
         <p class="text-center">ACTUAL PRICE</p>
         <div class="product-main-info" id="actual_price"><p style="font-size: 14px;">Select duration to see price</p></div>  <small>per month</small>
-        <div class="product-info-separation"></div>
+
 
 <!--         <p class="text-center">RENTAL DURATION</p>
         <small>from</small><div class="product-main-info"><%= @listing.period_min %></div> <small> to </small><div class="product-main-info"> <%#= @listing.period_max %></div><small> months</small>
