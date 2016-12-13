@@ -1,7 +1,7 @@
 <div class="bg-white padded">
   <h3 class="text-center">Last furniture added</h3>
   <div class="discovery">
-    <% Listing.all.each do |listing| %>
+    <% Listing.last(10).each do |listing| %>
       <div class="ambiance-card">
         <%= cl_image_tag listing.furniture.photos.first.path, width: 300, height: 200, crop: :fill, class: 'ambiance-image' %>
         <div class="ambiance-card-title text-center"><%= listing.furniture.name.upcase %></div>
