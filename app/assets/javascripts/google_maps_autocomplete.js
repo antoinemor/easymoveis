@@ -25,7 +25,7 @@ function onPlaceChanged() {
 }
 
 $(document).ready(function() {
-  var listing_address_attributes_address_line = $('#address_address_line').get(0);
+  var address_address_line = $('#address_address_line').get(0);
 
   if (address_address_line) {
     var autocomplete = new google.maps.places.Autocomplete(address_address_line, { types: ['geocode'] });
