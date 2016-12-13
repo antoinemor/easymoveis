@@ -2,6 +2,7 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :listing
   has_one :furniture, through: :listing
+  has_one :delivery
 
   validate :start_date_before_end_date
   validate :start_date_before_past

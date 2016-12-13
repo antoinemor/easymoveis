@@ -1,0 +1,17 @@
+<div class="row padded">
+  <div class="col-sm-8 col-sm-offset-2">
+    <div class="box-white">
+      <h2 class="text-center">Inform Rejection Message!</h2>
+      <h3>Furniture: <%= @listing.furniture.name %></h3>
+      <br>
+      <%= form_tag send_reject_message_path(@listing.id), method: :post do %>
+        <div class="form-group">
+          <%= label_tag 'message[body]', 'Message' %>
+          <%= text_area_tag 'message[body]', nil, cols: 3, class: 'form-control', required: true %>
+        </div>
+
+        <%= submit_tag 'Send', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

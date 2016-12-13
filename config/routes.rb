@@ -10,12 +10,12 @@ Rails.application.routes.draw do
 
   # User listings list
   get '/listings/user_listings', to: 'listings#user_listings', as: 'user_listings'
-  get '/search', to: 'search#index', as: 'search'
 
   # Furniture by ambiance
   get '/ambiances/:ambiance_id', to: 'ambiances#index', as: 'ambiances'
 
   # App routes
+  get '/search', to: 'search#index', as: 'search'
   resources :listings do
       member do
         get '/approve', to: 'listings#approve_booking', as: 'approve'
@@ -43,8 +43,9 @@ Rails.application.routes.draw do
   end
 
   resources :messages, only: [:new, :create]
-#          get '/reject_booking', to: 'messages#reject_booking', as: 'message_reject_booking'
-
+  get '/messages/listing/:listing_id/reject', to: 'messages#reject_booking', as: 'reject_booking_message'
+  post '/messages/listing/:listing_id/send_message', to: 'messages#send_reject_message', as: 'send_reject_message'
+  get '/messages/new/:user_id', to: 'messages#new_to', as: 'new_to'
 
   # App pages routes
   get '/about',   to: 'pages#about',   as: 'about'
