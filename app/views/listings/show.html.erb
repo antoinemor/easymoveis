@@ -76,18 +76,15 @@
         <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
         </div>
         <% if current_user != Listing.find(params[:id]).user %>
-          <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-primary' %>
+          <%= link_to 'Ask a question', new_message_path, class: 'btn btn-block btn-default' %>
           <%= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
         <% end %>
+        <% if booking.nil? %>
+          <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
+          <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
+        <% end %>
       </div>
-
-    <% if booking.nil? %>
-      <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
-      <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
-    <% end %>
-      <div id="map" style="height: 300px">
-
-      </div>
+      <div id="map" style="height: 300px"></div>
     </div>
   </div>
 </div>
@@ -97,6 +94,7 @@
 
 
 <% content_for(:after_js) do %>
+  <!-- Map builder -->
   <%= javascript_tag do %>
     $(document).ready(function() {
       var handler = Gmaps.build('Google');
@@ -113,25 +111,25 @@
     });
   <% end %>
 
+  <!-- Duration/price choice -->
   <%= javascript_tag do %>
     $('.btn-duration').click(function(e) {
       $('.btn-duration.target').removeClass('target');
       $(this).addClass('target');
-      selected_period= '';
-      selected_period=$(this).attr('id');
-      base_price = parseInt(<%= @listing.base_price.round %>);
+      selectedPeriod= '';
+      selectedPeriod=$(this).attr('id');
+      basePrice = parseInt(<%= @listing.base_price.round %>);
       <!--$('#actual_price').html(base_price * price_factor + '$');-->
-      if (selected_period == 3) {$('#actual_price').html(base_price + '$');}
-      if (selected_period == 6) {$('#actual_price').html(base_price * 0.95 + '$');}
-      if (selected_period == 9) {$('#actual_price').html(base_price * 0.9 + '$');}
-      if (selected_period == 12) {$('#actual_price').html(base_price * 0.85 + '$');}
-      if (selected_period == 18) {$('#actual_price').html(base_price * 0.80 + '$');}
-      if (selected_period == 24) {$('#actual_price').html(base_price * 0.75 + '$');}
+      if (selectedPeriod == 3) {$('#actual_price').html(basePrice + '$');}
+      if (selectedPeriod == 6) {$('#actual_price').html(basePrice * 0.95 + '$');}
+      if (selectedPeriod == 9) {$('#actual_price').html(basePrice * 0.9 + '$');}
+      if (selectedPeriod == 12) {$('#actual_price').html(basePrice * 0.85 + '$');}
+      if (selectedPeriod == 18) {$('#actual_price').html(basePrice * 0.80 + '$');}
+      if (selectedPeriod == 24) {$('#actual_price').html(basePrice * 0.75 + '$');}
     });
   <% end %>
 
-
-
+  <!-- Slick slideshows -->
   <%= javascript_tag do %>
     $(document).ready(function(){
       $('.slider-for').slick({
@@ -150,15 +148,11 @@
         focusOnSelect: true
       });
       $('.autoplay').slick({
-      slidesToShow: 3,
-      slidesToScroll: 1,
-      autoplay: true,
-      autoplaySpeed: 2000,
-});
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+      });
     });
   <% end %>
 <% end %>
-
-
-
-
