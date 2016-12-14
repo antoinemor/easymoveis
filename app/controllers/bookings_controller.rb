@@ -24,6 +24,7 @@ class BookingsController < ApplicationController
 
    def create
     @booking = @listing.bookings.new(booking_params)
+    @booking.delivery.status = "P"
     @booking.workflow_step = "P"
     @booking.user = current_user
     authorize @booking

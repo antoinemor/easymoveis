@@ -1,0 +1,29 @@
+<br><h3 class="text-center">Available deliveries</h3> <br>
+<% if @deliveries %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <% @deliveries.each do |delivery| %>
+          <div class="listing-line">
+            <div class="listing-image">
+              <%= cl_image_tag delivery.booking.listing.furniture.photos.first.path, width: 250, height: 150, crop: :fill %>
+            </div>
+            <div class="listing-content text-center">
+              <strong><%= delivery.booking.listing.furniture.name %> </strong> <br>
+              Category: <%= delivery.booking.listing.furniture.category %> <br>
+              Length: <%= delivery.delivery_price/10.0 %>km <br>
+              Price: <%= delivery.delivery_price %>$ <br>
+              City: <%= delivery.booking.listing.address.city %>
+            </div>
+            <div class="listing-actions text-center">
+              <%= link_to "Show delivery", delivery_path(delivery), class: "btn btn-default"  %>
+              <%= link_to "Accept", accept_delivery_path(delivery), class: "btn btn-primary"  %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <h3>No delivery available at the time!</h3>
+<% end %>
