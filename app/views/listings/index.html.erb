@@ -22,10 +22,12 @@
               <% listing.bookings.first.nil? ? status = "V" : status = listing.bookings.first.workflow_step %>
               <strong><%= listing.furniture.name %> </strong> <br>
               Category: <%= listing.furniture.category %><br>
-              Base price: <%= listing.base_price %><br>
+              Base price/mo: <%= listing.base_price %>$<br>
               <% if listing.bookings.first.nil? ==false %>
-                Booking start date: <%= listing.bookings[0].start_date %><br>
-                Booking end Date:  <%= listing.bookings[0].end_date %><br>
+                Actual price/mo: <%= listing.bookings.first.price %>$ <br>
+                Duration: <%= listing.bookings.first.duration %> months <br>
+                From <%= listing.bookings.first.start_date %> to <%= listing.bookings[0].end_date %><br>
+                Delivery: <%= listing.bookings.first.delivery.partner_delivery ? 'Partner delivery' : 'Self delivery' %> <br>
               <% end %>
               Status: <%= Booking.text_wkf_step(status) %><br>
             </div>
