@@ -35,12 +35,19 @@
                 <%= link_to "Show listing", listing_path(listing), class: "btn btn-default" %>
                 <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" if status == "V" %>
                 <%  if status == "P" %>
+                  <%= link_to "Show booking", listing_booking_path(listing, listing.bookings.first), class: "btn btn-default" %>
                   <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" %>
                   <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-primary" %>
                   <%= link_to "Reject", reject_listing_path(listing), class: "btn btn-default", data: { confirm: "Are you sure?" }  %>
                 <% end %>
-                <%= link_to "Delivered", rent_listing_path(listing), class: "btn btn-primary" if status == "A"%>
-                <%= link_to "Finish", finish_listing_path(listing), class: "btn btn-primary" if status == "T"%>
+                <% if status == "A" %>
+                  <%= link_to "Show booking", listing_booking_path(listing.bookings.first), class: "btn btn-default" %>
+                  <%= link_to "Delivered", rent_listing_path(listing), class: "btn btn-primary" %>
+                <% end %>
+                <% if status == "T" %>
+                  <%= link_to "Show booking", listing_booking_path(listing.bookings.first), class: "btn btn-default" %>
+                  <%= link_to "Finish", finish_listing_path(listing), class: "btn btn-primary"%>
+                <% end %>
             </div>
           </div>
         <% end %>
