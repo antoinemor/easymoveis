@@ -1,4 +1,12 @@
 <h1>My Listings</h1>
+<ul class="nav nav-tabs">
+  <li role="presentation"><%= link_to 'Available', listings_path(option: 'available') %></li>
+  <li role="presentation"><%= link_to 'Action Pending', listings_path(option: 'pending') %></li>
+  <li role="presentation"><%= link_to 'Waiting Delivery', listings_path(option: 'waiting') %></li>
+  <li role="presentation"><%= link_to 'Rented', listings_path(option: 'rented') %></li>
+  <li role="presentation"><%= link_to 'Finished', listings_path(option: 'finished') %></li>
+</ul>
+
 <% if @listings %>
   <div class="container">
     <div class="row">
@@ -12,12 +20,18 @@
               <% listing.bookings.first.nil? ? status = "V" : status = listing.bookings.first.workflow_step %>
               <strong><%= listing.furniture.name %> </strong> <br>
               Category: <%= listing.furniture.category %><br>
+              Base price: <%= listing.base_price %><br>
+              <% if listing.bookings.first.nil? ==false %>
+                Start date: <%= listing.bookings[0].start_date %><br>
+                End Date:  <%= listing.bookings[0].end_date %><br>
+              <% end %>
               Status: <%= Booking.text_wkf_step(status) %><br>
             </div>
             <div class="listing-actions text-center">
-                <%= link_to "Show listing", listing_path(listing), class: "btn btn-default"  %>
-                <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
+                <%= link_to "Show listing", listing_path(listing), class: "btn btn-default" %>
+                <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" if status == "V" %>
                 <%  if status == "P" %>
+                  <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" %>
                   <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-default" %>
                   <%= link_to "Reject", reject_listing_path(listing), class: "btn btn-red", data: { confirm: "Are you sure?" }  %>
                 <% end %>
