@@ -24,8 +24,8 @@
               Category: <%= listing.furniture.category %><br>
               Base price: <%= listing.base_price %><br>
               <% if listing.bookings.first.nil? ==false %>
-                Start date: <%= listing.bookings[0].start_date %><br>
-                End Date:  <%= listing.bookings[0].end_date %><br>
+                Booking start date: <%= listing.bookings[0].start_date %><br>
+                Booking end Date:  <%= listing.bookings[0].end_date %><br>
               <% end %>
               Status: <%= Booking.text_wkf_step(status) %><br>
             </div>
@@ -54,6 +54,7 @@
 
 <% content_for(:after_js) do %>
   <%= javascript_tag do %>
-  $('#listings-<%= "#{params[:option]}" %>').addClass('active');
+  <% display_option = params[:option] || 'available' %>
+  $('#listings-<%= "#{display_option}" %>').addClass('active');
   <% end %>
 <% end %>
