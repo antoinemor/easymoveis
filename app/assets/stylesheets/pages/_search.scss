@@ -1,0 +1,43 @@
+.auto-submit-item {
+  width: 100%;
+}
+
+.search-filter-row {
+  display: flex;
+}
+
+.search-filter {
+  margin: 5px 5px;
+  flex: 1 1 auto;
+  flex-basis: 0;
+}
+
+#price-slider {
+  width: 90%;
+  margin: 10px auto 0 auto;
+  p {
+    font-weight: light;
+    display: inline-block;
+  }
+  input {
+    color: $brand-color;
+    font-weight: light;
+    border: 0;
+  }
+}
+
+.ui-slider {
+   border: 1px solid $brand-color;
+   border-radius: 7px;
+}
+
+.ui-slider-range {
+  background: $brand-color;
+  border: 1px solid $brand-color;
+}
+
+.ui-slider-handle {
+  border-radius: 50%;
+  background: white !important;
+  background-color: white;
+}

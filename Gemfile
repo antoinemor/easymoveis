@@ -30,6 +30,7 @@ gem 'geocoder'
 gem "coffee-rails"
 gem "gmaps4rails"
 gem 'pg_search'
+gem 'jquery-ui-rails'
 
 source 'https://rails-assets.org' do
   gem "rails-assets-underscore"
