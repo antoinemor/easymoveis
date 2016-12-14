@@ -1,16 +1,18 @@
-<h1>My Listings</h1>
-<ul class="nav nav-tabs">
-  <li role="presentation"><%= link_to 'Available', listings_path(option: 'available') %></li>
-  <li role="presentation"><%= link_to 'Action Pending', listings_path(option: 'pending') %></li>
-  <li role="presentation"><%= link_to 'Waiting Delivery', listings_path(option: 'waiting') %></li>
-  <li role="presentation"><%= link_to 'Rented', listings_path(option: 'rented') %></li>
-  <li role="presentation"><%= link_to 'Finished', listings_path(option: 'finished') %></li>
-</ul>
+<br><h2 class="text-center">My Listings</h2> <br>
+
+
 
 <% if @listings %>
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <ul class="nav nav-pills nav-justified">
+          <li id="listings-available" role="presentation"><%= link_to 'Available', listings_path(option: 'available') %></li>
+          <li id="listings-pending" role="presentation"><%= link_to 'Action Pending', listings_path(option: 'pending') %></li>
+          <li id="listings-waiting" role="presentation"><%= link_to 'Waiting Delivery', listings_path(option: 'waiting') %></li>
+          <li id="listings-rented" role="presentation"><%= link_to 'Rented', listings_path(option: 'rented') %></li>
+          <li id="listings-finished" role="presentation"><%= link_to 'Finished', listings_path(option: 'finished') %></li>
+        </ul>
         <% @listings.each do |listing| %>
           <div class="listing-line">
             <div class="listing-image">
@@ -32,11 +34,11 @@
                 <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" if status == "V" %>
                 <%  if status == "P" %>
                   <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default" %>
-                  <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-default" %>
-                  <%= link_to "Reject", reject_listing_path(listing), class: "btn btn-red", data: { confirm: "Are you sure?" }  %>
+                  <%= link_to "Approve", approve_listing_path(listing), class: "btn btn-primary" %>
+                  <%= link_to "Reject", reject_listing_path(listing), class: "btn btn-default", data: { confirm: "Are you sure?" }  %>
                 <% end %>
-                <%= link_to "Delivered", rent_listing_path(listing), class: "btn btn-default" if status == "A"%>
-                <%= link_to "Finish", finish_listing_path(listing), class: "btn btn-default" if status == "T"%>
+                <%= link_to "Delivered", rent_listing_path(listing), class: "btn btn-primary" if status == "A"%>
+                <%= link_to "Finish", finish_listing_path(listing), class: "btn btn-primary" if status == "T"%>
             </div>
           </div>
         <% end %>
@@ -45,4 +47,13 @@
   </div>
 <% else %>
   <h3>You don't have any listing on the site!</h3>
+<% end %>
+<br>
+
+
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+  $('#listings-<%= "#{params[:option]}" %>').addClass('active');
+  <% end %>
 <% end %>
