@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if request.env['omniauth.origin'].present? && current_user.address.nil?
-      :edit_user_registration
+    if request.env['omniauth.origin'].present? && !current_user.address.present?
       flash[:alert] = "Please add an address and make sure your profile is complete."
+      :edit_user_registration
     else
       super
     end
