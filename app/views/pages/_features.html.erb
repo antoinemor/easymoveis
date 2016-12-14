@@ -1,6 +1,12 @@
 <div class="padded">
-  <h3 class="text-center">How it works</h3>
-  <div class="container">
+  <h3 class="text-center">HOW IT WORKS</h3> <br>
+  <div class="work-buttons text-center">
+    <div>
+      <div id="work-buyer" class="btn btn-lg btn-default btn-feature">I'M LOOKING FOR FURNITURE</div><div id="work-seller" class="btn btn-lg btn-default btn-feature">I WANT TO RENT FURNITURE</div>
+    </div>
+  </div> <br>
+
+  <div id="buyer-features" class="container general-features">
     <div class="row">
         <div class="features text-center">
           <div class="col-xs-12 col-sm-6 col-md-3">
@@ -42,5 +48,67 @@
         </div>
     </div>
   </div>
+
+  <div id="seller-features" class="container general-features">
+    <div class="row">
+        <div class="features text-center">
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="feature text-center">
+              <div class="feature-content">
+                <%= image_tag "furniture.png", class: "image-small" %>
+                <h3>Rent your furniture</h3>
+                <p>In a few clicks, rent your furniture on EasyMoveis and reach a large community of people looking for furniture!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="feature text-center">
+              <div class="feature-content">
+                <%= image_tag "rent.png", class: "image-small" %>
+                <h3>Earn money</h3>
+                <p>Don't let your furniture to rot in your garage or in a store house and earn money from it!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="feature text-center">
+              <div class="feature-content">
+                <%= image_tag "delivery.png", class: "image-small" %>
+                <h3>Quick delivery</h3>
+                <p>Enjoy the convenience of our network of delivery partners that will deliver your furniture!</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="feature text-center">
+              <div class="feature-content">
+                <%= image_tag "home.png", class: "image-small" %>
+                <h3>Change your home!</h3>
+                <p>Rent furniture, and find more on the site to change your interior!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $('.general-features').hide();
+    $('#work-buyer').click(function() {
+      $('.general-features').hide();
+      $('#buyer-features').show();
+      $('#work-buyer').addClass('active');
+      $('#work-seller').removeClass('active');
+    });
+    $('#work-seller').click(function() {
+      $('.general-features').hide();
+      $('#seller-features').show();
+      $('#work-seller').addClass('active');
+      $('#work-buyer').removeClass('active');
+    });
+  <% end %>
+<% end %>
 
