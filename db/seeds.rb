@@ -6,4 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-ambiances = Ambiance.create([{ name: 'Bedroom' }, { name: 'Living Room' },{ name: 'Kitchen' }, { name: 'Dining Room' }, { name: 'Children Room' }, { name: 'Bathroom' }, { name: 'Home ofice' }, { name: 'Hallway' }])
+ambiances = Ambiance.create([{ name: 'Bedroom' }, { name: 'Living Room' },{ name: 'Kitchen' }, { name: 'Dining Room' }, { name: 'Children Room' }, { name: 'Bathroom' }, { name: 'Home Office' }, { name: 'Hallway' }, { name: 'Laundry' }, { name: 'Outdoor' } ])
