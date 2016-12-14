@@ -3,6 +3,8 @@
   <p class="text-center">START DATE</p>
   <%= f.input :start_date, as: :date_picker, label: false, placeholder: 'dd/mm/yyyy', required: true  %>
   <%= f.input :end_date, as: :date_picker, as: :hidden, placeholder: 'dd/mm/yyyy'  %>
+  <%= f.input :price, as: :hidden %>
+  <%= f.input :duration, as: :hidden %>
   <div id="end-date-div" class="hidden">
     <div class="product-info-separation"></div>
     <p class="text-center">END DATE</p>

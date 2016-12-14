@@ -72,6 +72,14 @@
     });
   <% end %>
 
+  <!-- Add price and duration to form -->
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      $('#booking_price').val(<%= @price %>);
+      $('#booking_duration').val(<%= @duration %>);
+    });
+  <% end %>
+
   <!-- Itinerary calculation -->
   <%= javascript_tag do %>
     $(document).ready(function(){
