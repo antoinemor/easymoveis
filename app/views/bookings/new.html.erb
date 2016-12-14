@@ -24,7 +24,7 @@
           <div class="product-info-separation"></div>
 
           <%= render 'form' %> <br>
-          <%= link_to 'Back', root_path, class: "btn btn-default btn-block" %> <br>
+          <%= link_to 'Back', :back, class: "btn btn-clear btn-block" %> <br>
         </div>
         <div class="box-white box-margin-height">
           <p class="text-center">APPROXIMATE DISTANCE</p>
@@ -41,6 +41,8 @@
 <% end %>
 
 <% content_for(:after_js) do %>
+
+  <!-- Auto end-date calculation -->
   <%= javascript_tag do %>
     $('#booking_start_date').focusout(function() {
       var a = $('#booking_start_date').val();
@@ -63,12 +65,11 @@
       var endDate = dd+'/'+mm+'/'+yyyy;
       $('#booking_end_date').val(endDate);
       $("#end-date-div").removeClass('hidden');
-      $("#end_date").append(endDate);
+      $("#end_date").html(endDate);
     });
   <% end %>
 
-
-
+  <!-- Itinerary calculation -->
   <%= javascript_tag do %>
     $(document).ready(function(){
       var directionsDisplay;
@@ -95,7 +96,10 @@
           var routeLength = result.routes[0].legs[0].distance;
           directionsDisplay.setDirections(result);
           $('#delivery-length').append(routeLength.text);
-          $('#delivery-price').append((routeLength.value / 100)+'$');
+          var deliveryPrice = Math.round(routeLength.value / 100);
+          $('#delivery-price').append(deliveryPrice+'$');
+          $('#delivery-description').append(deliveryPrice+'$');
+          $('#booking_delivery_attributes_delivery_price').val(deliveryPrice);
         }
       });
 

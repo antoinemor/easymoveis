@@ -18,6 +18,7 @@ class BookingsController < ApplicationController
     @price = params[:booking][:price].to_i
     @duration = params[:booking][:duration].to_i
     @booking = @listing.bookings.new
+    @booking.build_delivery
     authorize @booking
   end
 
@@ -69,7 +70,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:end_date, :start_date, :workflow_step, :user_id, :listing_id)
+    params.require(:booking).permit(:end_date, :start_date, :workflow_step, :user_id, :listing_id, delivery_attributes: [:partner_delivery, :delivery_price])
   end
 end
 

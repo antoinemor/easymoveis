@@ -2,12 +2,13 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :listing
   has_one :furniture, through: :listing
-  has_one :delivery
+  has_one :delivery, dependent: :destroy
 
   validate :start_date_before_end_date
   validate :start_date_before_past
-  validates :user, uniqueness: { scope: :listing,
-    message: "should happen once per user" }
+  validates :user, uniqueness: { scope: :listing, message: "should happen once per user" }
+
+  accepts_nested_attributes_for :delivery
 
   # Converting status into a text
   @workflowstep_list = {'E' => "Editing",
