@@ -39,4 +39,10 @@ class Listing < ApplicationRecord
   def self.booked?
     Booking.where(listing_id: self.id).exists?
   end
+
+  def self.max_price
+    max_price = 0
+    Listing.all.each { |l| max_price = l.base_price if l.base_price > max_price }
+    return max_price.round
+  end
 end

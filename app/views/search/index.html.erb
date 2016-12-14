@@ -11,29 +11,34 @@
   <div class="row">
     <div class="col-xs-12 col-sm-7 col-sm-offset-1">
       <div class="box-white text-center">
-        <h4 class="text-center">Filters</h4>
         <form action="search" class="form-inline" id='auto_search'>
           <div class="form-group auto-submit-item" id="furniture_type">
-            <%= select("furniture", "furniture_type", Furniture::CATEGORY_OPTIONS,{selected: params[:furniture][:furniture_type], include_blank: 'Choose Type' })%>
-            <select class="form-control" id="ambiance_name" name="ambiance_name">
+            <div class="search-filter-row">
+              <%= select("furniture", "furniture_type", Furniture::CATEGORY_OPTIONS,{selected: params[:furniture][:furniture_type], include_blank: 'Choose Type' }, class: "form-control search-filter")%>
+              <select class="form-control search-filter" id="ambiance_name" name="ambiance_name">
                 <option value="">Choose Ambiance</option>
-              <%=Ambiance.all.each do |ambiance|%>
-                <option <%= "selected=selected" if params[:ambiance_name] == ambiance.name%>><%=ambiance.name%></option>
-              <% end %>
-            </select>
-            <input type="text" class="form-control" id="city" name="city" placeholder="City" value="<%= params[:city]%>">
-            <div class="input-group">
-              <div class="input-group-addon">$</div>
-              <input type="text" class="form-control" id="price_min" name="price_min" placeholder="Price Minimum" value="<%= params[:price_min]%>">
+                <%=Ambiance.all.each do |ambiance|%>
+                  <option <%= "selected=selected" if params[:ambiance_name] == ambiance.name%>><%=ambiance.name%></option>
+                <% end %>
+              </select>
+              <input type="text" class="form-control search-filter" id="city" name="city" placeholder="City" value="<%= params[:city]%>">
             </div>
-            <div class="input-group">
-              <div class="input-group-addon">$</div>
-              <input type="text" class="form-control" id="price_max" name="price_max" placeholder="Price Maximum" value="<%= params[:price_max]%>">
+            <div class="search-filter-row">
+              <div class="input-group search-filter hidden">
+                <div class="input-group-addon">$</div>
+                <input type="text" class="form-control" id="price_min" name="price_min" placeholder="Price Minimum" value="<%= params[:price_min]%>">
+              </div>
+              <div class="input-group search-filter hidden">
+                <div class="input-group-addon">$</div>
+                <input type="text" class="form-control" id="price_max" name="price_max" placeholder="Price Maximum" value="<%= params[:price_max]%>">
+              </div>
             </div>
           </div>
-        <button type="submit" class="btn navbar-wagon-button"><i class="fa fa-search"></i></button>
-
-      </form>
+          <div id="price-slider">
+            <div id="slider-range"></div>
+            <input type="text" class="text-center" id="amount" readonly>
+          </div>
+        </form>
       </div>
       <br>
       <div class="search-results">
@@ -51,7 +56,6 @@
                 <div class="card-price"> <strong><%= listing.base_price.round%></strong> <small> $/mo</small> </div>
                 <%= link_to '#', listing_path(listing), class: "card-link" %>
                 </div>
-
               </div>
             <% end %>
           </div>
@@ -69,6 +73,23 @@
 
 
 <% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      $( "#slider-range" ).slider({
+        range: true,
+        min: 0,
+        max: <%= @max_price %>,
+        values: [ <%= params[:price_min] || 0 %>, <%= params[:price_max] || @max_price %> ],
+        slide: function( event, ui ) {
+          $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+          $('#price_min').val(ui.values[ 0 ]);
+          $('#price_max').val(ui.values[ 1 ]);
+        },
+        change: function( event, ui ) {}
+      });
+      $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    });
+  <% end %>
 
   <%= javascript_tag do %>
     $(document).ready(function() {
