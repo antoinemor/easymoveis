@@ -13,7 +13,8 @@ class ListingsController < ApplicationController
   end
 
   def index
-    @listings = policy_scope(Listing)
+    params['option'].present? ? option = params['option'] : option = "available"
+    @listings = list_by_action(option, policy_scope(Listing))
   end
 
   def show
@@ -95,6 +96,32 @@ class ListingsController < ApplicationController
   end
 
   private
+
+  def list_by_action(option, listings)
+    case option
+      when 'available'
+        results = listings.select do |listing|
+          listing.bookings.empty? == true
+        end
+      when 'pending'
+        results = listings.select do |listing|
+          listing.bookings.empty? == false && (listing.bookings[0].workflow_step == 'P' || listing.bookings[0].workflow_step == 'R')
+        end
+      when 'waiting'
+        results = listings.select do |listing|
+          listing.bookings.empty? == false && (listing.bookings[0].workflow_step == 'A')
+        end
+      when 'rented'
+        results = listings.select do |listing|
+          listing.bookings.empty? == false && (listing.bookings[0].workflow_step == 'T')
+        end
+      when 'finished'
+        results = listings.select do |listing|
+          listing.bookings.empty? == false && (listing.bookings[0].workflow_step == 'F')
+        end
+    end
+    return results
+  end
 
   def find_listing
     @listing = Listing.find(params[:id])

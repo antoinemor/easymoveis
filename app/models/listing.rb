@@ -1,6 +1,7 @@
 class Listing < ApplicationRecord
   scope :available, ->(current_user) { where.not(user_id: current_user)  }
 
+
   PERIOD_OPTIONS = [3, 6, 9, 12, 18, 24]
 
   belongs_to :user
