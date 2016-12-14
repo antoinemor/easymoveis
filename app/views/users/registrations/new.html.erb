@@ -2,7 +2,19 @@
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
       <div class="box-white box-margin-height">
-        <h2 class="text-center">Sign up</h2>
+        <%- if devise_mapping.omniauthable? %>
+          <%- resource_class.omniauth_providers.each do |provider| %>
+            <%= link_to omniauth_authorize_path(resource_name, provider), class: "btn btn-block btn-social btn-facebook btn-margin" do %>
+              <span class="fa fa-facebook"></span> <div class="text-center"> <%= "SIGN UP WITH #{OmniAuth::Utils.camelize(provider).upcase}"%></div>
+            <% end %>
+          <% end -%>
+        <% end -%>
+
+        <div class="or-bar">
+          <div class="product-info-separation"></div>
+          <p> OR </p>
+          <div class="product-info-separation"></div>
+        </div>
 
         <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
           <%= f.error_notification %>
@@ -25,11 +37,11 @@
           <% end %>
 
           <div class="form-actions">
-            <%= f.button :submit, "Sign up", class: "btn btn-block btn-red btn-margin" %>
+            <%= f.button :submit, "SIGN UP", class: "btn btn-block btn-red btn-margin" %>
           </div>
         <% end %>
 
-        <%= render "devise/shared/links" %>
+        <%= render "devise/shared/links_no_fb" %>
       </div>
     </div>
   </div>

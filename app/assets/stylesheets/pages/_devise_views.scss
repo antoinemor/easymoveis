@@ -1,0 +1,18 @@
+.or-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  p {
+    color: gray;
+    margin: 0 10px;
+    font-style: italic;
+    font-weight: light;
+    font-size: 12px;
+  }
+}
+
+.or-bar-element {
+  flex: 0 1 auto;
+}
