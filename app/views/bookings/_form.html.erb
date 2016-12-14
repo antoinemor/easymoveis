@@ -1,7 +1,7 @@
 <%= simple_form_for [@listing, @booking] do |f| %>
   <%= f.error_notification %>
   <p class="text-center">START DATE</p>
-  <%= f.input :start_date, as: :date_picker, label: false, placeholder: 'dd/mm/yyyy'  %>
+  <%= f.input :start_date, as: :date_picker, label: false, placeholder: 'dd/mm/yyyy', required: true  %>
   <%= f.input :end_date, as: :date_picker, as: :hidden, placeholder: 'dd/mm/yyyy'  %>
   <div id="end-date-div" class="hidden">
     <div class="product-info-separation"></div>
@@ -9,6 +9,19 @@
     <div class="text-center"><div class="product-main-info" id="end_date"></div></div>
   </div>
   <br>
+  <div id="delivery-info">
+    <%= f.simple_fields_for :delivery do |ff| %>
+      <div class="product-info-separation"></div>
+      <p class="text-center">DELIVERY METHOD</p>
+      <%= ff.input :partner_delivery, label: 'Partner delivery' %>
+      <p class="text-center" id="delivery-description">If you choose partner delivery, An EasyMoveis partner will deliver your furniture to your door for </p>
+      <small><p class="text-center"><i>See below for details</i></p></small>
+      <%= ff.input :delivery_price, as: :hidden %>
+      <br>
+    <% end %>
+  </div>
+
+
   <%= f.button :submit, class: "btn btn-block btn-primary" %>
 <% end %>
 

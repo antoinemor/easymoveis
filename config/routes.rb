@@ -27,6 +27,10 @@ Rails.application.routes.draw do
     resources :bookings, except: [:destroy, :new]
     resources :furnitures
   end
+
+  resources :deliveries, only: [:index, :show]
+  get '/deliveries/accept/:id', to: 'deliveries#accept', as: 'accept_delivery'
+
   post '/listings/:listing_id/bookings/new', to: 'bookings#new', as: 'new_listing_booking'
   resources :bookings, only: [:destroy]
 

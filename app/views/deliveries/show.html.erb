@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <div class="box-white box-margin-height">
+        <h3 class="text-center" style="margin-top: 5px;">Delivery for <%= @delivery.booking.listing.furniture.name %></h3>
+        <p class="text-center">START ADDRESS</p>
+        <div class="text-center">
+          <%= @delivery.booking.listing.user.name %> <br>
+          <%= @delivery.booking.listing.address.address_line %> <br>
+          <%= @delivery.booking.listing.address.city %>, <%= @delivery.booking.listing.address.zip_code %> <br>
+        </div>
+        <div class="product-info-separation"></div>
+        <p class="text-center">END ADDRESS</p>
+        <div class="text-center">
+          <%= @delivery.booking.user.name %> <br>
+          <%= @delivery.booking.user.address.address_line %> <br>
+          <%= @delivery.booking.user.address.city %>, <%= @delivery.booking.user.address.zip_code %> <br>
+        </div>
+        <div class="product-info-separation"></div>
+        <p class="text-center">PRICE</p>
+        <div class="text-center"><div class="product-main-info" id="duration"><%= @delivery.delivery_price %>$</div></div>
+        <div class="product-info-separation"></div>
+        <div id="map" style="height: 300px"></div> <br>
+        <% if @delivery.status == 'P' %>
+          <%= link_to "Accept", accept_delivery_path(@delivery), class: "btn btn-primary btn-block btn-margin"  %>
+        <% end %>
+        <%= link_to 'Back', :back, class: "btn btn-clear btn-block btn-margin" %> <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<% content_for(:after_js) do %>
+
+  <!-- Itinerary calculation -->
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      var directionsDisplay;
+      var directionsService = new google.maps.DirectionsService();
+
+      directionsDisplay = new google.maps.DirectionsRenderer();
+      var mapCenter = new google.maps.LatLng(<%= @delivery.booking.listing.address.latitude %>, <%= @delivery.booking.listing.address.longitude %>);
+      var mapOptions = {
+        zoom:11,
+        center: mapCenter
+      }
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      directionsDisplay.setMap(map);
+
+      var startAddress = new google.maps.LatLng(<%= @delivery.booking.listing.address.latitude %>, <%= @delivery.booking.listing.address.longitude %>);
+      var endAddress = new google.maps.LatLng(<%= @delivery.booking.user.address.latitude %>, <%= @delivery.booking.user.address.longitude %>);
+      var request = {
+        origin: startAddress,
+        destination: endAddress,
+        travelMode: google.maps.TravelMode.DRIVING,
+      }
+      directionsService.route(request, function(result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(result);
+        }
+      });
+    });
+    <% end %>
+  <% end %>
