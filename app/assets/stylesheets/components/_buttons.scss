@@ -1,8 +1,13 @@
+.btn {
+  font-size: 13px;
+  font-weight: lighter;
+  transition: .3s;
+}
+
 .btn-red {
   background-color: $brand-color;
   border: 0;
   color: white;
-  transition: .3s;
   &:hover {
     background-color: #A70003;
     border: 0;
@@ -29,6 +34,15 @@
   &:target {
     background-color: $brand-color;
     color: white;
+  }
+}
+
+.btn-clear {
+  border: 0;
+  background-color: rgba(0,0,0,0);
+  color: $gray;
+  &:hover {
+    color: $brand-color;
   }
 }
 

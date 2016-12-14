@@ -23,7 +23,7 @@
             <%= f.input :description, label: "Bio", required: true %>
             <%= f.input :photo, as: :attachinary %>
             <% unless current_user.address %>
-              <%= link_to "New address", new_address_path, class: "btn btn-block btn-default" %> <br>
+              <%= link_to "NEW ADDRESS", new_address_path, class: "btn btn-block btn-default" %> <br>
             <% end %>
           </div>
           <%= f.simple_fields_for :address, @user.address do |address_form| %>
@@ -33,7 +33,7 @@
             <%= address_form.input :country %>
           <% end %>
           <div class="form-actions">
-            <%= f.button :submit, "Update", class: "btn btn-block btn-red" %>
+            <%= f.button :submit, "UPDATE", class: "btn btn-block btn-red" %>
           </div>
         <% end %>
         <br>
