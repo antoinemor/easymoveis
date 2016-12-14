@@ -9,17 +9,19 @@
     <div class="text-center"><div class="product-main-info" id="end_date"></div></div>
   </div>
   <br>
-  <%= f.simple_fields_for :delivery do |ff| %>
-    <div class="product-info-separation"></div>
-    <p class="text-center">DELIVERY METHOD</p>
-    <%= ff.input :partner_delivery, label: 'Partner delivery' %>
-    <p class="text-center" id="delivery-description">If you choose partner delivery, An EasyMoveis partner will deliver your furniture to your door for </p>
-    <small><p class="text-center"><i>See below for details</i></p></small>
-    <%= ff.input :delivery_price, as: :hidden %>
-    <br>
-  <% end %>
+  <div id="delivery-info">
+    <%= f.simple_fields_for :delivery do |ff| %>
+      <div class="product-info-separation"></div>
+      <p class="text-center">DELIVERY METHOD</p>
+      <%= ff.input :partner_delivery, label: 'Partner delivery' %>
+      <p class="text-center" id="delivery-description">If you choose partner delivery, An EasyMoveis partner will deliver your furniture to your door for </p>
+      <small><p class="text-center"><i>See below for details</i></p></small>
+      <%= ff.input :delivery_price, as: :hidden %>
+      <br>
+    <% end %>
+  </div>
 
 
-  <%= f.button :submit, class: "btn btn-block btn-primary", value: 'CREATE BOOKING!' %>
+  <%= f.button :submit, class: "btn btn-block btn-primary" %>
 <% end %>
 

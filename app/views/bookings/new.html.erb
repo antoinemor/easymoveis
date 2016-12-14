@@ -16,6 +16,9 @@
         <div class="box-white box-margin-height">
           <h3 class="text-center" style="margin-top: 5px;">Book <%= @booking.listing.furniture.name %></h3>
           <div class="product-info-separation"></div>
+          <p class="text-center">DEPOSIT</p>
+          <div class="text-center"><div class="product-main-info" id="duration"><%= @booking.listing.deposit %>$</div> <small>refundable</small></div>
+          <div class="product-info-separation"></div>
           <p class="text-center">DURATION</p>
           <div class="text-center"><div class="product-main-info" id="duration"><%= @duration %></div> <small>months</small></div>
           <div class="product-info-separation"></div>
