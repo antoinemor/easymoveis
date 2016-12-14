@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <div class="box-white box-margin-height">
         <h3 class="text-center" style="margin-top: 5px;">Booking for <%= @booking.listing.furniture.name %></h3>
-        <%= cl_image_tag @booking.listing.furniture.photos.first, width: 800, height:500, crop: :fill, class: 'img-responsive' %>
+        <%= cl_image_tag @booking.listing.furniture.photos.first.path, width: 800, height:400, crop: :fill, class: 'img-responsive' %>
         <div class="product-info-separation"></div>
         <p class="text-center">STATUS</p>
         <div class="text-center"><div class="product-main-info" id="duration"><%= Booking.text_wkf_step(@booking.workflow_step) %></div></div>
