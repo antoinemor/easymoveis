@@ -1,5 +1,5 @@
 class Furniture < ApplicationRecord
-  CATEGORY_OPTIONS = %w(Bed Chair Decoration Desk Dresser Ladder Table Sofa Other )
+  CATEGORY_OPTIONS = %w(Bed Chair Decoration Desk Dresser Ladder Table Sofa Storage Lighting Accessories Drawer Other)
 
   belongs_to :user
   has_one :listing
