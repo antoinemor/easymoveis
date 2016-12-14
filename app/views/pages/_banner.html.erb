@@ -1,18 +1,46 @@
 <div class="banner">
   <div class="banner-content">
-    <h1>FURNITURE THAT FITS YOUR LIFE</h1>
-    <h2>RENT IN A CLICK, RECEIVE IN A WEEK!</h2><br> <br>
-    <div class="banner-search-form">
-      <form action="search" class="form-inline">
-        <div class="form-group">
-          <label class="sr-only" for="city">Furniture type</label>
-          <input type="text" class="form-control search-field" id="furniture_type" name="furniture[furniture_type]" placeholder="Furniture">
-          <label class="sr-only" for="city">City</label>
-          <input type="text" class="form-control search-field" id="city" name="city" placeholder="City">
-        </div>
-        <button type="submit" class="btn navbar-wagon-button"><i class="fa fa-search"></i></button>
-      </form>
+<!---Computer-->
+    <div class="hidden-xs">
+      <h1>FURNITURE THAT FITS YOUR LIFE</h1>
+      <h2>RENT IN A CLICK, RECEIVE IN A WEEK!</h2><br> <br>
+      <div class="banner-search-form">
+        <form action="search" class="form-inline">
+          <div class="form-group">
+            <label class="sr-only" for="city">Furniture type</label>
+            <input type="text" class="form-control search-field" id="furniture_type" name="furniture[furniture_type]" placeholder="Furniture">
+            <label class="sr-only" for="city">City</label>
+            <input type="text" class="form-control search-field" id="city" name="city" placeholder="City">
+          </div>
+          <button type="submit" class="btn navbar-wagon-button"><i class="fa fa-search"></i></button>
+        </form>
+      </div>
     </div>
+
+<!---Cellular-->
+    <div class="visible-xs">
+      <div class="text-center classWithPad">
+        <div class="h1-responsive">FURNITURE THAT FITS YOUR LIFE</div>
+        <div class="h2-responsive">RENT IN A CLICK, RECEIVE IN A WEEK!</div><br> <br>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="banner-search-form-resp">
+              <form action="search">
+                <div class="form-group classWithPad">
+                  <input type="text" class="form-control search-field" id="furniture_type" name="furniture[furniture_type]" placeholder="Furniture">
+                </div>
+                <div class="form-group classWithPad">
+                  <input type="text" class="form-control search-field" id="city" name="city" placeholder="City">
+                </div>
+                <button type="submit" class="btn navbar-wagon-button classWithPad"><i class="fa fa-search"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </div>
   <div class="arrow bounce">
       <i class="fa fa-arrow-down fa-2x"></i>
