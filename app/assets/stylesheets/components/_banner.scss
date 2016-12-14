@@ -16,12 +16,14 @@
 
   margin-top: -70px;
   margin-bottom: 0;
+
   p {
     font-weight: 300;
     font-size: 20px;
     letter-spacing: 3px;
     opacity: 0.9;
   }
+
   h1 {
     letter-spacing: 5px;
     text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
@@ -30,6 +32,19 @@
   h2 {
     letter-spacing: 7px;
     font-size: 18px;
+  }
+  .h1-responsive{
+    letter-spacing: 4px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    font-size: 30px;
+    margin: 0px 10px 15px 10px;
+
+  }
+  .h2-responsive{
+    letter-spacing: 4px;
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    margin: 0px 20px 10px 20px;
   }
 }
 
@@ -40,7 +55,7 @@
   }
   #furniture_type {
     border-right: 0;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px 0px 0px 10px;
   }
   input {
     border-radius: 0;
@@ -57,6 +72,36 @@
   }
 }
 
+.banner-search-form-resp {
+  .form-control {
+    float: left;
+  }
+  #furniture_type {
+    border-right: 0;
+    border-radius: 10px 10px 10px 10px;
+    width: 40px;
+  }
+  #city {
+    border-right: 0;
+    border-radius: 10px 10px 10px 10px;
+    width: 40px;
+  }
+  input {
+    border-radius: 0;
+    margin: 0;
+    height: 40px;
+    font-size: 18px;
+    margin-bottom: 10px;
+
+  }
+  button {
+    margin: 0;
+    height: 40px;
+    font-size: 18px;
+    border-radius: 10px 10px 10px 10px;
+  }
+}
+
 .banner-content {
   flex: 0 1 auto;
   margin-top: 25vh;
@@ -70,6 +115,7 @@
   font-size: 14px;
   font-weight: lighter;
   text-align: center;
+
 }
 
 .arrow {
@@ -95,3 +141,12 @@
     transform: translateY(-15px);
   }
 }
+
+
+.classWithPad {
+  margin: 0px 30px 0px 30px;
+}
+
+
+
+
