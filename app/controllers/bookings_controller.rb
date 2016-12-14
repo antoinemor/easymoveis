@@ -71,7 +71,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:end_date, :start_date, :workflow_step, :user_id, :listing_id, delivery_attributes: [:partner_delivery, :delivery_price])
+    params.require(:booking).permit(:end_date, :start_date, :workflow_step, :price, :duration, :user_id, :listing_id, delivery_attributes: [:partner_delivery, :delivery_price])
   end
 end
 
