@@ -1,4 +1,8 @@
 .footer {
+  bottom: 0px;
+  position: absolute;
+  left:0;
+  right:0;
   height: 120px;
   display: flex;
   flex-wrap: wrap;
@@ -12,6 +16,7 @@
     font-size: 14px;
     font-weight: 300;
   }
+
 }
 
 .footer-social {
@@ -41,6 +46,12 @@
     }
   }
 }
+
+.footer, .push {
+    height: 120px; /* .push must be the same height as .footer */
+}
+
+
 
 
 

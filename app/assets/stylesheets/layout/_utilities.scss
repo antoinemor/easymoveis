@@ -34,6 +34,9 @@ body {
   background-color: rgba(0,0,0,0.03);
 }
 
+html, body {
+    height: 100%;}
+
 .page-content {
   margin-top: 70px;
 }
@@ -50,4 +53,13 @@ body {
   z-index: 2;
   margin-top: 70px;
   width: 100%;
+}
+
+
+.wrapper {
+  position:relative;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
 }
