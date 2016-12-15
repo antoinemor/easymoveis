@@ -4,9 +4,11 @@ class Booking < ApplicationRecord
   has_one :furniture, through: :listing
   has_one :delivery, dependent: :destroy
 
-  validate :start_date_before_end_date
-  validate :start_date_before_past
+  validates :start_date, presence: true
+  validates :end_date, presence: true
   validates :user, uniqueness: { scope: :listing, message: "should happen once per user" }
+
+  validate :start_date_before_past
 
   accepts_nested_attributes_for :delivery
 
@@ -21,22 +23,16 @@ class Booking < ApplicationRecord
                       'F' => 'Finished',
                       'V' => 'Available'}
 
-  # Search for the booking and recovers it's status
+  # Search for the booking and recovers its status
   def self.text_wkf_step(step)
-
     resp = step.nil? ? 'Available' : @workflowstep_list[step]
   end
 
   private
-   def start_date_before_end_date
-     if self.start_date > self.end_date
-       errors.add(:start_date, "Start date must be before end date")
-     end
-   end
 
-   def start_date_before_past
-     if self.start_date < Date.today
-       errors.add(:start_date, "Start date must be since today")
-     end
-   end
+  def start_date_before_past
+    unless self.start_date.nil?
+      errors.add(:start_date, "The start date can't be in less than three days") if self.start_date < Date.today + 3
+    end
+  end
 end
