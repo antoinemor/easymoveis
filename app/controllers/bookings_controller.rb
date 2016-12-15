@@ -5,7 +5,9 @@ class BookingsController < ApplicationController
   before_action :get_furniture, only: [:new, :edit]
 
   def index
-    @bookings = policy_scope(Booking)
+
+    params['option'].present? ? option = params['option'] : option = "available"
+    @bookings = list_by_action(option, policy_scope(Booking))
   end
 
   def show
@@ -52,6 +54,29 @@ class BookingsController < ApplicationController
   end
 
   private
+
+  def list_by_action(option, bookings)
+    case option
+      when 'available'
+      when 'pending'
+        results = bookings.select do |booking|
+          booking.nil? == false && (booking.workflow_step == 'P' || booking.workflow_step == 'R')
+        end
+      when 'waiting'
+        results = bookings.select do |booking|
+          booking.nil? == false && (booking.workflow_step == 'A')
+        end
+      when 'rented'
+        results = bookings.select do |booking|
+          booking.nil? == false && (booking.workflow_step == 'T')
+        end
+      when 'finished'
+        results = bookings.select do |booking|
+          booking.nil? == false && (booking.workflow_step == 'F')
+        end
+    end
+    return results
+  end
 
   def find_listing
     @listing = Listing.find(params[:listing_id])
