@@ -11,3 +11,17 @@
   width: 100%;
   margin: 15px 0;
 }
+
+#user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#user-avatar {
+  flex: 0 1 25%;
+}
+
+#user-description {
+  flex: 0 1 70%;
+}
