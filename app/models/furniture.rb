@@ -8,6 +8,8 @@ class Furniture < ApplicationRecord
   validates :name,        presence: true
   validates :description, presence: true
   validates :category,    presence: true
-  validates :photos,       presence: true
+  validates :photos,      presence: true
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS, :allow_nil => false
+
+
 end

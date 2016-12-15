@@ -2,13 +2,12 @@ class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :listing
   has_one :furniture, through: :listing
-  has_one :delivery, dependent: :destroy
+  has_one :delivery,  dependent: :destroy
 
   validates :start_date, presence: true
-  validates :end_date, presence: true
-  validates :user, uniqueness: { scope: :listing, message: "should happen once per user" }
-
-  validate :start_date_before_past
+  validates :end_date,   presence: true
+  validates :user,       uniqueness: { scope: :listing, message: "should happen once per user" }
+  validate  :start_date_before_past
 
   accepts_nested_attributes_for :delivery
 

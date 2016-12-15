@@ -1,28 +1,6 @@
 class Listing < ApplicationRecord
-  scope :available, ->(current_user) { where.not(user_id: current_user)  }
-
-
   PERIOD_OPTIONS = [3, 6, 9, 12, 18, 24]
-
-  belongs_to :user
-  has_many :bookings
-  has_one :furniture, dependent: :destroy
-  has_one :address, dependent: :destroy
-  has_many :listing_ambiances, dependent: :destroy
-  has_many :ambiances, through: :listing_ambiances
-
-  accepts_nested_attributes_for :furniture
-  accepts_nested_attributes_for :address
-
-  validates :base_price, presence: true
-  validates :period_min, presence: true
-  validates :period_max, presence: true
-  validates :deposit, presence: true
-
-  validates_inclusion_of :period_min, :in => PERIOD_OPTIONS, :allow_nil => true
-  validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true
-
-  validate :check_period_min_max
+  scope :available, ->(current_user) { where.not(user_id: current_user)  }
 
   include PgSearch
   pg_search_scope :global_search,
@@ -30,6 +8,24 @@ class Listing < ApplicationRecord
       furniture: [ :category ],
       address: [ :city ]
     }
+
+  belongs_to :user
+  has_one    :furniture,         dependent: :destroy
+  has_one    :address,           dependent: :destroy
+  has_many   :bookings
+  has_many   :listing_ambiances, dependent: :destroy
+  has_many   :ambiances,         through: :listing_ambiances
+
+  validates :base_price, presence: true
+  validates :period_min, presence: true
+  validates :period_max, presence: true
+  validates :deposit,    presence: true
+  validates_inclusion_of :period_min, :in => PERIOD_OPTIONS, :allow_nil => true
+  validates_inclusion_of :period_max, :in => PERIOD_OPTIONS, :allow_nil => true
+  validate :check_period_min_max
+
+  accepts_nested_attributes_for :furniture
+  accepts_nested_attributes_for :address
 
   def check_period_min_max
     if PERIOD_OPTIONS.index(period_min) > PERIOD_OPTIONS.index(period_max)

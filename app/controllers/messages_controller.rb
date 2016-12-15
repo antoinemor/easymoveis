@@ -32,7 +32,6 @@ class MessagesController < ApplicationController
     params.require(:listing).permit(:listing_id)
   end
 
-
   def find_listing
     @listing = Listing.find(params[:listing_id])
   end

@@ -2,16 +2,6 @@ class ListingsController < ApplicationController
   before_action :find_listing, only: [:show, :edit, :update, :destroy, :approve_booking, :reject_booking, :rent_booking, :finish_booking]
   skip_before_action :authenticate_user!, only: [:index, :show, :search]
 
-  def search
-    @results = Listing.available(current_user)
-    authorize @results
-    @hash = Gmaps4rails.build_markers(@results) do |result, marker|
-      marker.lat result.address.latitude
-      marker.lng result.address.longitude
-      # marker.infowindow render_to_string(partial: "/results/map_box", locals: { result: result })
-    end
-  end
-
   def index
     params['option'].present? ? option = params['option'] : option = "available"
     @listings = list_by_action(option, policy_scope(Listing))
@@ -30,7 +20,6 @@ class ListingsController < ApplicationController
     @listing = Listing.new
     @listing.furniture = Furniture.new
     @listing.address = Address.new
-
     authorize @listing
   end
 

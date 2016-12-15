@@ -1,7 +1,7 @@
 class ConversationsController < ApplicationController
   before_action :get_mailbox
   before_action :get_conversation, except: [:index, :empty_trash]
-  before_action :get_box, only: [:index]
+  before_action :get_box,          only: [:index]
 
   def index
     if @box.eql? "inbox"
@@ -11,11 +11,11 @@ class ConversationsController < ApplicationController
     else
       @conversations = @mailbox.trash
     end
-
     @conversations = @conversations
   end
 
   def show
+    @conversation.mark_as_read(current_user)
   end
 
   def reply
