@@ -25,6 +25,9 @@
   .badge-container i {
     color: white;
   }
+  .fa-bars {
+    color: white;
+  }
 }
 
 /* Optional class to fix the navbar on top */
@@ -122,7 +125,6 @@
 /* Navbar dropdown menu */
 .navbar-wagon-dropdown-menu {
   margin-top: 15px;
-  box-shadow: 1px 1px 4px #E6E6E6;
   border-color: #E6E6E6;
 }
 .navbar-wagon-dropdown-menu li > a {

@@ -50,7 +50,13 @@
         <p class="text-center">STATUS</p>
         <% booking = Booking.where(listing_id: @listing.id) %>
         <div class="product-main-info" style="font-size: 18px">
-        <%= @listing.bookings.first.nil? ? 'Available' : Booking.text_wkf_step(@listing.bookings.first.workflow_step)  %></Strong> </p>
+          <% if @listing.bookings.first.nil? %>
+            Available
+          <% elsif @listing.bookings.first.workflow_step == 'T' %>
+            Rented until <%= @listing.bookings.first.end_date %>
+          <% else %>
+            <%= Booking.text_wkf_step(@listing.bookings.first.workflow_step) %>
+          <% end %>
         </div>
         <div class="product-info-separation"></div>
 
@@ -85,16 +91,14 @@
 
         <% if current_user != Listing.find(params[:id]).user %>
           <%= link_to 'Ask a question', new_to_path(@listing.user), class: 'btn btn-block btn-default' %> <br>
-          <%= simple_form_for :booking, url: new_listing_booking_path(@listing.id) do |f| %>
-            <%= f.input :duration, as: :hidden %>
-            <%= f.input :price, as: :hidden %>
-            <%= f.button :submit, value: 'Book Furniture', class: "btn btn-block btn-primary" %>
+          <% if @listing.bookings.first.nil? %>
+            <%= simple_form_for :booking, url: new_listing_booking_path(@listing.id) do |f| %>
+              <%= f.input :duration, as: :hidden %>
+              <%= f.input :price, as: :hidden %>
+              <%= f.button :submit, value: 'Book Furniture', class: "btn btn-block btn-primary" %>
+            <% end %>
           <% end %>
-
-          <%#= link_to 'Book Furniture', new_listing_booking_path(@listing.id), class: "btn btn-block btn-primary"  %>
-        <% end %>
-        <% if booking.nil? %>
-          <%= link_to "Approve", listing_path(listing), class: "btn btn-default"  %>
+        <% else %>
           <%= link_to "Edit", edit_listing_path(listing), class: "btn btn-default"  %>
         <% end %>
       </div>

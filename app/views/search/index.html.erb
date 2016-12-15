@@ -14,7 +14,7 @@
         <form action="search" class="form-inline" id='auto_search'>
           <div class="form-group auto-submit-item" id="furniture_type">
             <div class="search-filter-row">
-              <%= select("furniture", "furniture_type", Furniture::CATEGORY_OPTIONS,{selected: params[:furniture][:furniture_type], include_blank: 'Choose Type' }, class: "form-control search-filter")%>
+              <%= select("furniture", "furniture_type", Furniture::CATEGORY_OPTIONS,{selected: params[:furniture][:furniture_type].capitalize, include_blank: 'Choose Type' }, class: "form-control search-filter")%>
               <select class="form-control search-filter" id="ambiance_name" name="ambiance_name">
                 <option value="">Choose Ambiance</option>
                 <%=Ambiance.all.each do |ambiance|%>
