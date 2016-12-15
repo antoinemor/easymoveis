@@ -105,7 +105,7 @@
             <%= simple_form_for :booking, url: new_listing_booking_path(@listing.id) do |f| %>
               <%= f.input :duration, as: :hidden %>
               <%= f.input :price, as: :hidden %>
-              <%= f.button :submit, value: 'Book Furniture', class: "btn btn-block btn-primary" %>
+              <%= f.button :submit, value: 'Book!', class: "btn btn-block btn-primary" %>
             <% end %>
           <% end %>
         <% else %>
