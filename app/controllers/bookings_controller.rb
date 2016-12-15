@@ -6,7 +6,7 @@ class BookingsController < ApplicationController
 
   def index
 
-    params['option'].present? ? option = params['option'] : option = "available"
+    params['option'].present? ? option = params['option'] : option = "pending"
     @bookings = list_by_action(option, policy_scope(Booking))
   end
 
