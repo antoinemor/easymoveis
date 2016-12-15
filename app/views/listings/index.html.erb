@@ -1,4 +1,6 @@
+<br>
 <h2 class="text-center">My Listings</h2>
+<br>
 
 <% if @listings %>
   <div class="container">
@@ -20,7 +22,6 @@
             <div class="listing-content text-center">
               <% listing.bookings.first.nil? ? status = "V" : status = listing.bookings.first.workflow_step %>
               <strong><%= listing.furniture.name %> </strong> <br>
-              Category: <%= listing.furniture.category %><br>
               Base price/mo: <%= listing.base_price %>$<br>
               <% if listing.bookings.first.nil? ==false %>
                 Actual price/mo: <%= listing.bookings.first.price %>$ <br>
@@ -49,7 +50,7 @@
     </div>
   </div>
 <% else %>
-  <h3>You don't have any listing on the site!</h3>
+  <h5 class="text-center">You don't have any listing on the site!</h5>
 <% end %>
 <br>
 
