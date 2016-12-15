@@ -15,7 +15,7 @@
     <%= f.simple_fields_for :delivery do |ff| %>
       <div class="product-info-separation"></div>
       <p class="text-center">DELIVERY METHOD</p>
-      <%= ff.input :partner_delivery, label: 'Partner delivery' %>
+      <%= ff.input :partner_delivery, label: 'Partner delivery', as: :select, include_blank: false, label: false, :collection => [['I will arrange my delivery','false'],['I choose EasyMoveis partner delivery','true']] %>
       <p class="text-center" id="delivery-description">If you choose partner delivery, An EasyMoveis partner will deliver your furniture to your door for </p>
       <small><p class="text-center"><i>See below for details</i></p></small>
       <%= ff.input :delivery_price, as: :hidden %>
