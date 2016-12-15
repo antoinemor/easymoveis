@@ -69,10 +69,15 @@ class ListingsController < ApplicationController
   def approve_booking
     @listing.bookings[0].workflow_step = "A"
     @listing.bookings[0].save
+    if @listing.bookings.first.delivery.partner_delivery
+      delivery_message = "You chose EasyMoveis partner delivery, and your furniture will be assigned to a delivery partner shortly."
+    else
+      delivery_message = "When are you available to come and pick it up?"
+    end
     current_user.send_message(@listing.bookings[0].user,
-      "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was approved!\n",
-     "Booking approved")
-    redirect_to listings_path, notice: 'Booking approved.'
+      "Hello #{@listing.bookings[0].user.first_name}!\n I just approved your booking for #{@listing.furniture.name}! #{delivery_message}\n",
+     "Your booking was approved")
+    redirect_to listings_path, notice: 'The booking was approved and the user has been informed.'
   end
 
   def reject_booking
