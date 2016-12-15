@@ -21,22 +21,22 @@
       <br>
       <!-- Product description -->
       <div class="box-white text-center">
-        <strong>Description</strong> <br>
-        <%= @listing.furniture.description %> <br> <br>
+        <p class="text-center">DESCRIPTION</p> <br>
+        <%= @listing.furniture.description.gsub("\n", "<br>").html_safe %> <br> <br>
       </div>
       <br>
       <!-- User info -->
       <div id="user-info" class="box-white">
         <div id="user-avatar" class="text-center"><%= image_tag avatar_image(@listing.user), class: 'avatar-big' %></div>
         <div id="user-description">
-          <p><strong><%= @listing.user.first_name %></strong> <br>
+          <p><%= @listing.user.first_name.upcase %><br>
           <small><i>Member since <%= @listing.user.created_at.month %>/<%= @listing.user.created_at.year %> - <%= @listing.user.listings.count %> listings on EasyMoveis</i></small></p>
           <small><p><%= @listing.user.description %></p></small>
         </div>
       </div> <br>
       <!-- List of ambiances -->
       <div class="box-white text-center">
-        <strong>Ambiances</strong> <br>
+        <p class="text-center">AMBIANCES</p> <br>
         <% @listing.ambiances.each do |ambiance| %>
           <div class="btn btn-default">  <%=ambiance.name%></div>
         <%end%>
@@ -44,7 +44,7 @@
       <br>
       <!-- Product in similar ambiance -->
       <div class="box-white">
-        <strong><p class="text-center"> See also in the same ambiances </p></strong>
+        <p class="text-center">SEE ALSO IN THE SAME AMBIANCE</p> <br>
         <div class="autoplay" style= "padding:  20px 0px 20px 0px; margin: 0px -20px 0px -20px;">
         <% find_similar(@listing).each do |l| %>
           <%= link_to listing_path(l) do %>
