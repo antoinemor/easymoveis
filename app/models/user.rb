@@ -4,10 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]
-  has_many :bookings
-  has_many :listings
-  has_many :furnitures
-  has_one  :address, dependent: :destroy
+  has_many :bookings,   dependent: :destroy
+  has_many :listings,   dependent: :destroy
+  has_many :furnitures, dependent: :destroy
+  has_one  :address,    dependent: :destroy
 
   has_attachment :photo
   acts_as_messageable

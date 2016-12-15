@@ -12,7 +12,7 @@ class Listing < ApplicationRecord
   belongs_to :user
   has_one    :furniture,         dependent: :destroy
   has_one    :address,           dependent: :destroy
-  has_many   :bookings
+  has_many   :bookings,          dependent: :destroy
   has_many   :listing_ambiances, dependent: :destroy
   has_many   :ambiances,         through: :listing_ambiances
 
