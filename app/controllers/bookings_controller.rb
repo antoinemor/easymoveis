@@ -36,6 +36,8 @@ class BookingsController < ApplicationController
       current_user.send_message(@listing.user, "Hey #{@listing.user.first_name}!\n I want to book #{@listing.furniture.name}! Please accept my demand as soon as possible! \n Cheers! \n #{current_user.first_name}", "You have a new booking!")
       redirect_to new_listing_booking_payment_path(@booking.listing, @booking), notice: 'Your booking was successfully created.'
     else
+      @price = booking_params[:price].to_i
+      @duration = booking_params[:duration].to_i
       render :new
     end
   end
