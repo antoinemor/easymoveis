@@ -75,7 +75,7 @@ class ListingsController < ApplicationController
       delivery_message = "When are you available to come and pick it up?"
     end
     current_user.send_message(@listing.bookings[0].user,
-      "Hello #{@listing.bookings[0].user.first_name}!\n I just approved your booking for #{@listing.furniture.name}! #{delivery_message}\n",
+      "Hello #{@listing.bookings[0].user.first_name}!\n I just approved your booking for #{@listing.furniture.name}! #{delivery_message} Cheers! #{current_user.first_name}",
      "Your booking was approved")
     redirect_to listings_path, notice: 'The booking was approved and the user has been informed.'
   end
