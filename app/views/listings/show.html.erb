@@ -25,6 +25,16 @@
         <%= @listing.furniture.description %> <br> <br>
       </div>
       <br>
+      <!-- User info -->
+      <div id="user-info" class="box-white">
+        <div id="user-avatar" class="text-center"><%= image_tag avatar_image(@listing.user), class: 'avatar-big' %></div>
+        <div id="user-description">
+          <p><strong><%= @listing.user.first_name %></strong> <br>
+          <small><i>Member since <%= @listing.user.created_at.month %>/<%= @listing.user.created_at.year %> - <%= @listing.user.listings.count %> listings on EasyMoveis</i></small></p>
+          <small><p><%= @listing.user.description %></p></small>
+        </div>
+      </div> <br>
+      <!-- List of ambiances -->
       <div class="box-white text-center">
         <strong>Ambiances</strong> <br>
         <% @listing.ambiances.each do |ambiance| %>
