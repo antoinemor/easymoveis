@@ -31,7 +31,7 @@ class PaymentsController < ApplicationController
     redirect_to listing_booking_path(@booking.listing, @booking)
 
   rescue Stripe::CardError => e
-    flash[:error] = e.message
+    flash[:alert] = e.message
     redirect_to new_listing_booking_payment_path(@booking.listing, @booking)
   end
 

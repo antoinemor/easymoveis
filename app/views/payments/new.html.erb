@@ -18,28 +18,16 @@
         <div class="product-info-separation"></div>
         <p class="text-center">TOTAL OF FIRST PAYMENT</p>
 
-        <div class="text-center"><div class="product-main-info" id="duration"><%= @total_price %>$</div>  <br> <small><i>including <%= @booking.listing.deposit %>$ refundable deposit</i> </small></div>
-
-
-        <%= form_tag new_listing_booking_payment_path(@booking.listing, @booking) do %>
-          <article>
-            <label class="amount">
-              <span>Price/month: <%= @booking.price %></span>
-              <span>Deposit: <%= @booking.listing.deposit %></span>
-              <% if @booking.delivery.partner_delivery %>
-                <span>Partner delivery: <%= @booking.delivery.delivery_price %>$</span>
-              <% end %>
-            </label>
-          </article>
-
-
+        <div class="text-center"><div class="product-main-info" id="duration"><%= @total_price %>$</div>  <br> <small><i>including <%= @booking.listing.deposit %>$ refundable deposit</i> </small></div> <br>
+        <div class="text-center">
           <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
             data-name="My Rental"
             data-description="Rental for <%= @booking.listing.furniture.name %>"
             data-amount="<%= @total_price*100 %>"
-            data-currency="USD"></script>
-        <% end %>
+            data-currency="USD">
+          </script>
+        </div>
       </div>
     </div>
   </div>
