@@ -27,7 +27,7 @@
       <br>
       <!-- User info -->
       <div id="user-info" class="box-white">
-        <div id="user-avatar" class="text-center"><%= cl_image_tag avatar_image(@listing.user), width: 200, height:200, crop: :fill, class: 'avatar-big' %></div>
+        <div id="user-avatar" class="text-center"><%= cl_image_tag avatar_image(@listing.user), width: 100, height: 100, crop: :fill, class: 'avatar-big' %></div>
         <div id="user-description">
           <p><%= @listing.user.first_name.upcase %><br>
           <small><i>Member since <%= @listing.user.created_at.month %>/<%= @listing.user.created_at.year %> - <%= @listing.user.listings.count %> listings on EasyMoveis</i></small></p>
