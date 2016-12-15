@@ -6,7 +6,7 @@ class BookingsController < ApplicationController
 
   def index
 
-    params['option'].present? ? option = params['option'] : option = "available"
+    params['option'].present? ? option = params['option'] : option = "pending"
     @bookings = list_by_action(option, policy_scope(Booking))
   end
 
@@ -17,6 +17,11 @@ class BookingsController < ApplicationController
     if current_user.bookings.where(listing_id: (params[:listing_id]) ).present?
       redirect_to listing_path(params[:listing_id]), alert: 'This listing is already booked.'
     end
+
+    if params[:booking][:duration].present? == false
+      redirect_to listing_path(params[:listing_id]), alert: 'Please inform Rental Duration.'
+    end
+
     @price = params[:booking][:price].to_i
     @duration = params[:booking][:duration].to_i
     @booking = @listing.bookings.new
@@ -57,7 +62,6 @@ class BookingsController < ApplicationController
 
   def list_by_action(option, bookings)
     case option
-      when 'available'
       when 'pending'
         results = bookings.select do |booking|
           booking.nil? == false && (booking.workflow_step == 'P' || booking.workflow_step == 'R')
