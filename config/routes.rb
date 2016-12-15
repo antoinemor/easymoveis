@@ -26,9 +26,13 @@ Rails.application.routes.draw do
         get '/finish', to: 'listings#finish_booking', as: 'finish'
       end
 
-    resources :bookings, except: [:destroy, :new]
+    resources :bookings, except: [:destroy, :new] do
+      resources :payments, only: [:new, :create]
+    end
     resources :furnitures
   end
+
+  post '/listings/:listing_id/bookings/:booking_id/payments/new', to: 'payments#new'
 
   resources :deliveries, only: [:index, :show]
   get '/deliveries/accept/:id', to: 'deliveries#accept', as: 'accept_delivery'
