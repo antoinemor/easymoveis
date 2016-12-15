@@ -1,0 +1,48 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <div class="box-white box-margin-height">
+        <h3 class="text-center" style="margin-top: 5px;">Payment for <%= @booking.listing.furniture.name %></h3> <br>
+        <p class="text-center">DEPOSIT</p>
+        <div class="text-center"><div class="product-main-info" id="duration"><%= @booking.listing.deposit %>$</div> <small>refundable</small></div>
+        <div class="product-info-separation"></div>
+        <p class="text-center">PRICE PER MONTH</p>
+        <div class="text-center"><div class="product-main-info" id="duration"><%= @booking.price %>$</div>   <small>per month</small></div>
+
+        <% if @booking.delivery.partner_delivery %>
+          <div class="product-info-separation"></div>
+          <p class="text-center">PARTNER DELIVERY</p>
+          <div class="text-center"><div class="product-main-info" id="duration"><%= @booking.delivery.delivery_price %>$</div></div>
+        <% end %>
+        <div class="product-info-separation"></div>
+        <p class="text-center">TOTAL OF FIRST PAYMENT</p>
+
+        <div class="text-center"><div class="product-main-info" id="duration"><%= @total_price %>$</div>  <br> <small><i>including <%= @booking.listing.deposit %>$ refundable deposit</i> </small></div>
+
+
+        <%= form_tag new_listing_booking_payment_path(@booking.listing, @booking) do %>
+          <article>
+            <label class="amount">
+              <span>Price/month: <%= @booking.price %></span>
+              <span>Deposit: <%= @booking.listing.deposit %></span>
+              <% if @booking.delivery.partner_delivery %>
+                <span>Partner delivery: <%= @booking.delivery.delivery_price %>$</span>
+              <% end %>
+            </label>
+          </article>
+
+
+          <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+            data-name="My Rental"
+            data-description="Rental for <%= @booking.listing.furniture.name %>"
+            data-amount="<%= @total_price*100 %>"
+            data-currency="USD"></script>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
