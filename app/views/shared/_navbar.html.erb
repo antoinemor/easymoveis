@@ -71,12 +71,18 @@
     <div class="dropdown">
       <i class="fa fa-bars dropdown-toggle" data-toggle="dropdown"></i>
       <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
-        <li><%= link_to "New listing", new_listing_path %></li>
+        <li><%= link_to "Rent furniture!", new_listing_path %></li>
         <li><%= link_to "My listings", user_listings_path %></li>
         <li><%= link_to "My bookings", user_bookings_path %></li>
-        <li><%= link_to destroy_user_session_path, method: :delete do %>
-                  <%= t(".sign_out", default: "Sair") %>
-              <% end %>
+        <% if user_signed_in? %>
+        <li>
+          <%= link_to destroy_user_session_path, method: :delete do %>
+            <%= t(".sign_out", default: "Sign out") %>
+          <% end %>
+        </li>
+        <% else %>
+          <li><%= link_to "Log in", new_user_session_path %></li>
+        <% end %>
       </ul>
     </div>
   </div>
