@@ -679,22 +679,22 @@ bounce
 
 @keyframes bounce {
   0% {
-    transform: translateY(0%) scaleY(0.6);
+    transform: translateY(0%);
   }
   60%{
-    transform: translateY(-100%) scaleY(1.1);
+    transform: translateY(-100%);
   }
   70%{
-    transform: translateY(0%) scaleY(0.95) scaleX(1.05);
+    transform: translateY(0%) ;
   }
   80%{
-    transform: translateY(0%) scaleY(1.05) scaleX(1);
+    transform: translateY(0%);
   }
   90%{
-    transform: translateY(0%) scaleY(0.95) scaleX(1);
+    transform: translateY(0%);
   }
   100%{
-    transform: translateY(0%) scaleY(1) scaleX(1);
+    transform: translateY(0%);
   }
 }
 

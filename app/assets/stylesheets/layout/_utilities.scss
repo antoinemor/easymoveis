@@ -5,6 +5,7 @@
  * ------------------------------------- */
 
 // Paddings
+
 .padded {
   padding-top: 2em;
   padding-bottom: 2em;
@@ -28,7 +29,6 @@
 }
 
 // General
-
 html,
 body {
   margin:0;
@@ -39,8 +39,6 @@ body {
     background-color: rgba(0,0,0,0.03);
   }
 }
-
-
 
 #wrapper {
   min-height: 100%;
@@ -53,10 +51,6 @@ body {
 
 #page-content {
   margin-top: 70px;
-}
-
-.inline-block {
-  display: inline-block;
 }
 
 // Flashes

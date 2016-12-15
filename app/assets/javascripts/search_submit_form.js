@@ -1,4 +1,3 @@
-
 $("#ambiance_name").change(function() {
   $("form#auto_search").submit();
 });

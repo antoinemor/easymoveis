@@ -1,11 +1,10 @@
 class BookingsController < ApplicationController
-  before_action :find_booking, only: [:show, :edit, :update, :destroy, :cancel_booking]
-  before_action :get_listing, only: [:show, :edit]
-  before_action :find_listing, only: [:new, :create, :update]
+  before_action :find_booking,  only: [:show, :edit, :update, :destroy, :cancel_booking]
+  before_action :get_listing,   only: [:show, :edit]
+  before_action :find_listing,  only: [:new, :create, :update]
   before_action :get_furniture, only: [:new, :edit]
 
   def index
-
     params['option'].present? ? option = params['option'] : option = "pending"
     @bookings = list_by_action(option, policy_scope(Booking))
   end
@@ -20,7 +19,6 @@ class BookingsController < ApplicationController
     unless params[:booking][:duration].present?
       redirect_to listing_path(params[:listing_id]), alert: 'Please inform rental duration.'
     end
-
     @price = params[:booking][:price].to_i
     @duration = params[:booking][:duration].to_i
     @booking = @listing.bookings.new
@@ -36,7 +34,7 @@ class BookingsController < ApplicationController
     authorize @booking
     if @booking.save
       current_user.send_message(@listing.user, "Hey #{@listing.user.first_name}!\n I want to book #{@listing.furniture.name}! Please accept my demand as soon as possible! \n Cheers! \n #{current_user.first_name}", "You have a new booking!")
-      redirect_to new_listing_booking_payment_path(@booking.listing, @booking), notice: 'Booking was successfully created.'
+      redirect_to new_listing_booking_payment_path(@booking.listing, @booking), notice: 'Your booking was successfully created.'
     else
       render :new
     end

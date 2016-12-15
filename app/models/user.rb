@@ -7,16 +7,12 @@ class User < ApplicationRecord
   has_many :bookings
   has_many :listings
   has_many :furnitures
-  has_one :address, dependent: :destroy
-  accepts_nested_attributes_for :address
+  has_one  :address, dependent: :destroy
+
   has_attachment :photo
   acts_as_messageable
 
-  # validates :description, presence: :true
-  # validates :first_name, presence: :true
-  # validates :last_name, presence: :true
-  # validates :date_of_birth, presence: :true
-  # validates :address, presence: :true
+  accepts_nested_attributes_for :address
 
   def self.find_for_facebook_oauth(auth)
     user_params = auth.to_h.slice(:provider, :uid)
@@ -34,7 +30,6 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]  # Fake password for validation
       user.save
     end
-
     return user
   end
 

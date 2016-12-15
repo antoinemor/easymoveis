@@ -9,7 +9,6 @@ class SearchController < ApplicationController
 
     @listings = @listings.select{|l| l.ambiances.map(&:name).include?(params[:ambiance_name])} if params[:ambiance_name].present?
 
-
     @hash = Gmaps4rails.build_markers(@listings) do |result, marker|
       marker.lat result.address.latitude
       marker.lng result.address.longitude
