@@ -1,4 +1,6 @@
+<br>
 <h2 class="text-center">My Bookings</h2>
+<br>
 
 <div class="container">
   <div class="row">
@@ -9,7 +11,6 @@
         <li id="bookings-rented" role="presentation"><%= link_to 'Rented', bookings_path(option: 'rented') %></li>
         <li id="bookings-finished" role="presentation"><%= link_to 'Finished', bookings_path(option: 'finished') %></li>
       </ul>
-
       <% if @bookings %>
         <% @bookings.each do |booking| %>
           <div class="listing-line">
@@ -18,11 +19,11 @@
             </div>
             <div class="listing-content text-center">
               <strong><%= booking.listing.furniture.name %> </strong> <br>
-              Category: <%= booking.listing.furniture.category %> <br>
-              Description; <%= booking.listing.furniture.description %><br>
-              Start-date: <%= booking.start_date %><br>
-              End-date: <%= booking.end_date %><br>
+              Booked price/month: <%= booking.price %>$ <br>
+              Duration: <%= booking.duration %> months <br>
+              From <%= booking.start_date %> to <%= booking.end_date %><br>
               Status: <%= Booking.text_wkf_step(booking.workflow_step) %><br>
+              Delivery: <%= booking.delivery.partner_delivery ? 'Partner delivery' : 'Self delivery' %> <br>
             </div>
             <div class="listing-actions text-center">
             </div>
@@ -36,10 +37,8 @@
           </div>
         <% end %>
       <% else %>
-        <h3>You don't have any new booking!</h3>
+        <h5 class="text-center">You don't have any new booking!</h5>
       <% end %>
-    <br>
-      <%= link_to 'Back', :back %> |
     </div>
   </div>
 </div>
