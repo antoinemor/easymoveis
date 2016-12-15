@@ -66,7 +66,7 @@ class ListingsController < ApplicationController
     current_user.send_message(@listing.bookings[0].user,
       "Hello #{@listing.bookings[0].user.first_name}!\n I just approved your booking for #{@listing.furniture.name}! #{delivery_message} Cheers! #{current_user.first_name}",
      "Your booking was approved")
-    redirect_to listings_path, notice: 'The booking was approved and the user has been informed.'
+    redirect_to listings_path(option: 'pending'), notice: 'The booking was approved and the user has been informed.'
   end
 
   def reject_booking
@@ -79,14 +79,14 @@ class ListingsController < ApplicationController
     @listing.bookings[0].workflow_step = "T"
     @listing.bookings[0].save
     current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your furniture: #{@listing.furniture.name} was delivered!", "Booking delivered")
-    redirect_to listings_path, notice: 'The furniture was delivered to the client.'
+    redirect_to listings_path(option: 'waiting'), notice: 'The furniture was delivered to the client.'
   end
 
   def finish_booking
     @listing.bookings[0].workflow_step = "F"
     @listing.bookings[0].save
     current_user.send_message(@listing.bookings[0].user, "Hello #{@listing.bookings[0].user.first_name}!\n Your booking: #{@listing.furniture.name} was finished!", "Booking Finished")
-    redirect_to listings_path, notice: 'The rental operation is finished.'
+    redirect_to listings_path(option: 'rented'), notice: 'The rental operation is finished.'
   end
 
   private
