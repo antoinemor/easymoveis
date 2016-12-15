@@ -6,8 +6,8 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
       <ul class="nav nav-pills nav-justified">
-        <li id="bookings-pending" role="presentation"><%= link_to 'New', bookings_path(option: 'pending') %></li>
-        <li id="bookings-waiting" role="presentation"><%= link_to 'Waiting Delivery', bookings_path(option: 'waiting') %></li>
+        <li id="bookings-pending" role="presentation"><%= link_to 'Pending', bookings_path(option: 'pending') %></li>
+        <li id="bookings-waiting" role="presentation"><%= link_to 'Waiting for delivery', bookings_path(option: 'waiting') %></li>
         <li id="bookings-rented" role="presentation"><%= link_to 'Rented', bookings_path(option: 'rented') %></li>
         <li id="bookings-finished" role="presentation"><%= link_to 'Finished', bookings_path(option: 'finished') %></li>
       </ul>
