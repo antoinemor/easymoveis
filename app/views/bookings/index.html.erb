@@ -1,7 +1,16 @@
-<% if @bookings %>
-  <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+<h2 class="text-center">My Bookings</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+      <ul class="nav nav-pills nav-justified">
+        <li id="bookings-pending" role="presentation"><%= link_to 'New', bookings_path(option: 'pending') %></li>
+        <li id="bookings-waiting" role="presentation"><%= link_to 'Waiting Delivery', bookings_path(option: 'waiting') %></li>
+        <li id="bookings-rented" role="presentation"><%= link_to 'Rented', bookings_path(option: 'rented') %></li>
+        <li id="bookings-finished" role="presentation"><%= link_to 'Finished', bookings_path(option: 'finished') %></li>
+      </ul>
+
+      <% if @bookings %>
         <% @bookings.each do |booking| %>
           <div class="listing-line">
             <div class="listing-image">
@@ -26,11 +35,20 @@
             </div>
           </div>
         <% end %>
-        <br>
-        <%= link_to 'Back', :back %> |
-      </div>
+      <% else %>
+        <h3>You don't have any new booking!</h3>
+      <% end %>
+    <br>
+      <%= link_to 'Back', :back %> |
     </div>
   </div>
-<% else %>
-  <h3>You don't have any listing on the site!</h3>
+</div>
+
+
+<% content_for(:after_js) do %>
+  <%= javascript_tag do %>
+  <% display_option = params[:option] || 'pending' %>
+  $('#bookings-<%= "#{display_option}" %>').addClass('active');
+  <% end %>
 <% end %>
+
