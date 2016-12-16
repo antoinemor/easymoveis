@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  skip_before_action :authenticate_user!
+
   def index
     @listings = Listing.global_search("#{params[:furniture][:furniture_type]} #{params[:city]}")
 
